@@ -28,6 +28,18 @@ my_shop_admin.product_edit:
     requirements:
         id: \d+
 
+my_shop_admin.product_photo_add:
+    path:   /product/{idProduct}/photo/add
+    defaults: { _controller: MyShopAdminBundle:ProductPhoto:add }
+    requirements:
+        idProduct: \d+
+
+my_shop_admin.product_photo_list:
+    path:   /product/{idProduct}/photos
+    defaults: { _controller: MyShopAdminBundle:ProductPhoto:list }
+    requirements:
+        idProduct: \d+
+
 my_shop_admin.category_add:
     path:   /category/add
     defaults: { _controller: MyShopAdminBundle:Category:add }

@@ -1,6 +1,6 @@
-<html>
-<body>
+{% extends "@MyShopAdmin/layout.html.twig" %}
 
+{% block body %}
 <a href="{{ path("my_shop_admin.product_add") }}">Добавить товар</a>
 
 <table border="1">
@@ -16,11 +16,10 @@
         <td>{{ product.getPrice() }}</td>
         <td>
             <a href="{{ path("my_shop.admin.product_delete", {id:product.id}) }}">Удалить</a><br/>
-            <a href="{{ path("my_shop_admin.product_edit", {id:product.id}) }}">Редактирование</a>
+            <a href="{{ path("my_shop_admin.product_edit", {id:product.id}) }}">Редактирование</a><br>
+            <a href="{{ path("my_shop_admin.product_photo_list", {idProduct:product.getId()}) }}">Управление картинками</a>
         </td>
     </tr>
 {% endfor %}
 </table>
-
-</body>
-</html>
+{% endblock %}

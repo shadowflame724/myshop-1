@@ -8,14 +8,15 @@
         <td colspan="2"><h3>Admin panel</h3></td>
     </tr>
     <tr>
-        <td valign="top" style="width: 400px">
+        <td valign="top" style="width: 250px">
             <ul>
-                <li><a href="{{ path("myshop.main_page") }}">Main page</a></li>
+                <li><a href="{{ path("my_shop_admin.index") }}">Главная</a></li>
+                <li><a href="{{ path("my_shop_admin.product_list") }}">Товары</a></li>
+                <li><a href="{{ path("my_shop_admin.category_list") }}">Категории товаров</a></li>
             </ul>
         </td>
         <td valign="top">
-            {% block body %}
-            {% endblock %}
+            {% block body %}{% endblock %}
         </td>
     </tr>
 </table>

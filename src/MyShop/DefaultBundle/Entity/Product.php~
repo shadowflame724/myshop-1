@@ -196,38 +196,5 @@ class Product
     {
         return $this->dateCreatedAt;
     }
-
-    /**
-     * Add photo
-     *
-     * @param \MyShop\DefaultBundle\Entity\ProductPhoto $photo
-     *
-     * @return Product
-     */
-    public function addPhoto(\MyShop\DefaultBundle\Entity\ProductPhoto $photo)
-    {
-        $this->photos[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Remove photo
-     *
-     * @param \MyShop\DefaultBundle\Entity\ProductPhoto $photo
-     */
-    public function removePhoto(\MyShop\DefaultBundle\Entity\ProductPhoto $photo)
-    {
-        $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
 }
+
