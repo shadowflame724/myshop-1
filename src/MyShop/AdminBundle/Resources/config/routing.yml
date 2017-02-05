@@ -41,8 +41,8 @@ my_shop_admin.product_photo_list:
         idProduct: \d+
 
 my_shop_admin.category_add:
-    path:   /category/add
-    defaults: { _controller: MyShopAdminBundle:Category:add }
+    path:   /category/add/{idParent}
+    defaults: { _controller: MyShopAdminBundle:Category:add, idParent:null }
 
 my_shop_admin.category_list:
     path:   /category/list

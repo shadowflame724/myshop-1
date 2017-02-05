@@ -16,7 +16,10 @@ class CategoryController extends Controller
     */
     public function listAction()
     {
-        $categoryList = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Category")->findAll();
+        $categoryList = $this->getDoctrine()
+            ->getManager()
+            ->createQuery("select hello from MyShopDefaultBundle:Category hello where hello.parentCategory is null")
+            ->getResult();
 
         return ["categoryList" => $categoryList];
     }
@@ -24,7 +27,7 @@ class CategoryController extends Controller
     /**
      * @Template()
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, $idParent = null)
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -34,13 +37,23 @@ class CategoryController extends Controller
             $form->handleRequest($request);
 
             $manager = $this->getDoctrine()->getManager();
+
+            if ($idParent !== null)
+            {
+                $parentCat = $this->getDoctrine()->getManager()->getRepository("MyShopDefaultBundle:Category")->find($idParent);
+                $category->setParentCategory($parentCat);
+            }
+
             $manager->persist($category);
             $manager->flush();
 
             return $this->redirectToRoute("my_shop_admin.category_list");
         }
 
-        return ["form" => $form->createView()];
+        return [
+            "form" => $form->createView(),
+            "idParent" => $idParent
+        ];
     }
 
     /**

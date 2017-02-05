@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "09a5648874b9611cf9c5fa20a6d25b86",
+    "content-hash": "8d0a523a1c838a0196207f0e66d22970",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -773,6 +773,51 @@
                 "orm"
             ],
             "time": "2016-09-10T18:51:13+00:00"
+        },
+        {
+            "name": "eventviva/php-image-resize",
+            "version": "1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eventviva/php-image-resize.git",
+                "reference": "8c086aad961c082939ee9e42f83f536f37b73b00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eventviva/php-image-resize/zipball/8c086aad961c082939ee9e42f83f536f37b73b00",
+                "reference": "8c086aad961c082939ee9e42f83f536f37b73b00",
+                "shasum": ""
+            },
+            "require": {
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aditya Patadia",
+                    "homepage": "http://aditya.patadia.org/"
+                }
+            ],
+            "description": "PHP class to re-size and scale images",
+            "homepage": "https://github.com/eventviva/php-image-resize",
+            "keywords": [
+                "image",
+                "php",
+                "resize",
+                "scale"
+            ],
+            "time": "2017-01-19T10:34:05+00:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2085,8 +2130,5 @@
     "platform": {
         "php": ">=5.5.9"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.5.9"
-    }
+    "platform-dev": []
 }

@@ -3,6 +3,7 @@
 namespace MyShop\AdminBundle\Controller;
 
 use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
+use Eventviva\ImageResize;
 use MyShop\DefaultBundle\Entity\ProductPhoto;
 use MyShop\DefaultBundle\Form\ProductPhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -46,21 +47,27 @@ class ProductPhotoController extends Controller
 
             /** @var UploadedFile $photoFile */
             $photoFile = $filesAr["photoFile"];
-            $mimeType = $photoFile->getClientMimeType();
-            if ($mimeType !== "image/jpeg" and $mimeType !== "image/jpg" and $mimeType !== "image/gif" and $mimeType !== "image/png") {
-                throw new InvalidArgumentException("MimeType is blocked!");
+
+            $checkImgService = $this->get("myshop_admin.check_img");
+            try {
+                $checkImgService->check($photoFile);
+            } catch (\InvalidArgumentException $ex) {
+                die("Image type error!");
             }
 
-            $fileExt = $photoFile->getClientOriginalExtension();
-            if ($fileExt !== "jpg" and $fileExt !== "png" and $fileExt !== "gif") {
-                throw new InvalidArgumentException("Extension is blocked!");
-            }
+            $imageNameGenerator = $this->get("myshop_admin.image_name_generator");
 
-            $photoFileName = $product->getId() . rand(1000000, 9999999) . "." . $photoFile->getClientOriginalExtension();
+            $photoFileName = $product->getId() . $imageNameGenerator->generateName() . "." . $photoFile->getClientOriginalExtension();
             $photoDirPath = $this->get("kernel")->getRootDir() . "/../web/photos/";
 
             $photoFile->move($photoDirPath, $photoFileName);
 
+            $img = new ImageResize($photoDirPath . $photoFileName);
+            $img->resizeToBestFit(250, 200);
+            $smallPhotoName = "small_" . $photoFileName;
+            $img->save($photoDirPath . $smallPhotoName);
+
+            $photo->setSmallFileName($smallPhotoName);
             $photo->setFileName($photoFileName);
             $photo->setProduct($product);
 

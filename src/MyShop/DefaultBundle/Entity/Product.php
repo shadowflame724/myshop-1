@@ -54,7 +54,7 @@ class Product
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="MyShop\DefaultBundle\Entity\Category", inversedBy="productList")
-     * @ORM\JoinColumn(name="id_category", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_category", referencedColumnName="id", onDelete="CASCADE")
     */
     private $category;
 

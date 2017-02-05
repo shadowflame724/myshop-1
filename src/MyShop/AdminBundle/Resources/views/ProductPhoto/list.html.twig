@@ -9,7 +9,9 @@
         <tr>
             <td>{{ photo.getTitle() }}</td>
             <td>
-                <img src="/photos/{{ photo.getFileName() }}" />
+                <a href="/photos/{{ photo.getFileName() }}">
+                <img src="/photos/{{ photo.getSmallFileName() }}" />
+                </a>
             </td>
             <td>
                 <a href="#">Редактирование</a>
