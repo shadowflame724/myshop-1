@@ -41,6 +41,8 @@ class ProductController extends Controller
             ->createQuery("select p, c from MyShopDefaultBundle:Product p join p.category c")
             ->getResult();
 
+        //$this->get("session")->set("history", $this->get("session")->get("history") . "<br />product list");
+
         return ["productList" => $productList];
     }
 
@@ -63,6 +65,8 @@ class ProductController extends Controller
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($product);
                 $manager->flush();
+
+                //$this->get("session")->set("history", $this->get("session")->get("history") . "<br />product edit");
 
                 return $this->redirectToRoute("my_shop_admin.product_list");
             }
@@ -90,6 +94,12 @@ class ProductController extends Controller
 
             if ($form->isSubmitted())
             {
+                $logger = $this->get("logger");
+                $logger->addInfo(json_encode([
+                    "product id" => $product->getId(),
+                    "price" => $product->getPrice()
+                ]));
+
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($product);
                 $manager->flush();

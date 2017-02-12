@@ -55,20 +55,10 @@ class ProductPhotoController extends Controller
                 die("Image type error!");
             }
 
-            $imageNameGenerator = $this->get("myshop_admin.image_name_generator");
+            $result = $this->get("myshop_admin.image_uploader")->uploadImage($photoFile, $idProduct);
 
-            $photoFileName = $product->getId() . $imageNameGenerator->generateName() . "." . $photoFile->getClientOriginalExtension();
-            $photoDirPath = $this->get("kernel")->getRootDir() . "/../web/photos/";
-
-            $photoFile->move($photoDirPath, $photoFileName);
-
-            $img = new ImageResize($photoDirPath . $photoFileName);
-            $img->resizeToBestFit(250, 200);
-            $smallPhotoName = "small_" . $photoFileName;
-            $img->save($photoDirPath . $smallPhotoName);
-
-            $photo->setSmallFileName($smallPhotoName);
-            $photo->setFileName($photoFileName);
+            $photo->setSmallFileName($result->getSmallFileName());
+            $photo->setFileName($result->getBigFileName());
             $photo->setProduct($product);
 
             $manager->persist($photo);

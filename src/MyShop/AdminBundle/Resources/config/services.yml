@@ -1,4 +1,12 @@
 services:
+    myshop_admin.image_uploader:
+        class: MyShop\AdminBundle\ImageUtil\UploadImageService
+        arguments:
+            - "@myshop_admin.check_img"
+            - "@myshop_admin.image_name_generator"
+        calls:
+            - ["setUploadImageRootDir", ["%image_upload_dir%"]]
+
     myshop_admin.check_img:
         class: MyShop\AdminBundle\ImageUtil\CheckImg
         arguments:
