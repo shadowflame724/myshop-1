@@ -14,10 +14,8 @@ class DefaultController extends Controller
     {
 
 
-        return $this->render("@MyShopDefault/Default/index.html.twig", [
-            "newsList" => "",
-            "productList" => '...'
-        ]);
+
+        return $this->render("@MyShopDefault/Default/index.html.twig");
     }
 
     public function createSomeProductAction()

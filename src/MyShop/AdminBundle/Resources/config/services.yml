@@ -14,3 +14,9 @@ services:
 
     myshop_admin.image_name_generator:
         class: MyShop\AdminBundle\ImageUtil\ImageNameGenerator
+
+    myshop_admin.twig.my_cusdfsfgjhksfdgkhjdsfgkjhsfghiu34t89sd98g89sdfguyergoiuystom_extension:
+        class: MyShop\AdminBundle\Twig\MyCustomExtension
+        public: false
+        tags:
+            - { name: twig.extension }

@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />
+    {% block head_js %}{% endblock %}
 </head>
 <body>
 <table border="1" style="width: 100%">
@@ -16,6 +17,7 @@
             </ul>
         </td>
         <td valign="top">
+            {{ "HELLO WORLD!!!"|bold }}
             {% block body %}{% endblock %}
         </td>
     </tr>
