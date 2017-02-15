@@ -14,14 +14,57 @@ class CategoryController extends Controller
     /**
      * @Template()
     */
-    public function listAction()
+    public function treeAction()
     {
-        $categoryList = $this->getDoctrine()
-            ->getManager()
-            ->createQuery("select hello from MyShopDefaultBundle:Category hello where hello.parentCategory is null")
-            ->getResult();
+        $categoryList = $this->getDoctrine()->getManager()->getRepository("MyShopDefaultBundle:Category")->findAll();
 
-        return ["categoryList" => $categoryList];
+        $res = [];
+
+        /** @var Category $cat */
+        foreach ($categoryList as $cat)
+        {
+            $parentId = '#';
+            if ($cat->getParentCategory() !== null) {
+                $parentId = $cat->getParentCategory()->getId();
+            }
+
+            $res[] = [
+                'id' => $cat->getId(),
+                'parent' => $parentId,
+                'text' => $cat->getName(),
+                'state' => ['opened' => true]
+            ];
+        }
+
+        return [
+            "catDataJson" => json_encode($res)
+        ];
+    }
+
+    /**
+     * @Template()
+    */
+    public function listAction($idParentCategory = null)
+    {
+        $manager = $categoryList = $this->getDoctrine()->getManager();
+        $result = [];
+        $viewData = [];
+
+        if ($idParentCategory !== null) {
+            $dql = "select hello from MyShopDefaultBundle:Category hello where hello.parentCategory = :idParent";
+            $result = $manager->createQuery($dql)
+                ->setParameter("idParent", $idParentCategory)
+                ->getResult();
+
+            $viewData["categoryCurrent"] = $manager->getRepository("MyShopDefaultBundle:Category")->find($idParentCategory);
+        } else {
+            $dql = "select hello from MyShopDefaultBundle:Category hello where hello.parentCategory is null";
+            $result = $manager->createQuery($dql)->getResult();
+        }
+
+        $viewData["categoryList"] = $result;
+
+        return $viewData;
     }
 
     /**
@@ -47,7 +90,7 @@ class CategoryController extends Controller
             $manager->persist($category);
             $manager->flush();
 
-            return $this->redirectToRoute("my_shop_admin.category_list");
+            return $this->redirectToRoute("my_shop_admin.category_list", ['idParentCategory' => $idParent]);
         }
 
         return [

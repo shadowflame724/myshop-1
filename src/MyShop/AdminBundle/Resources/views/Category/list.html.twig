@@ -2,11 +2,16 @@
 
 {% block body %}
 
-<a href="{{ path("my_shop_admin.category_add") }}">Добавить категорию</a>
-<ul>
-{% for cat in categoryList %}
-    <li><a href="{{ path("my_shop_admin.product_list_by_category", {id_category:cat.id}) }}">{{ cat.name }}</a></li>
-{% endfor %}
-</ul>
+    {% if categoryCurrent is defined %}
+        <h4>{{ categoryCurrent.name }}</h4>
+        <a href="{{ path("my_shop_admin.category_add", {idParent:categoryCurrent.id}) }}">Добавить подкатегорию</a>
+    {% else %}
+        <a href="{{ path("my_shop_admin.category_add") }}">Добавить категорию</a>
+    {% endif %}
 
+    <ul>
+    {% for cat in categoryList %}
+        <li><a href="{{ path('my_shop_admin.category_list', {idParentCategory:cat.id}) }}">{{ cat.name }}</a> - <a href="{{ path("my_shop_admin.product_list_by_category", {id_category:cat.id}) }}">Товары</a></li>
+    {% endfor %}
+    </ul>
 {% endblock %}
