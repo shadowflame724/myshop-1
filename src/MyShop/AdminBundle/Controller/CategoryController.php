@@ -75,6 +75,8 @@ class CategoryController extends Controller
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
 
+        $this->getParameter("my_test_param");
+
         if ($request->isMethod("POST"))
         {
             $form->handleRequest($request);

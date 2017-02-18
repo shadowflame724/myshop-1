@@ -1,11 +1,11 @@
-<form action="{{ path('login') }}" method="post" class="mt">
+<form action="{{ path('login') }}" method="post">
 
-    <label for="" class="text-uppercase text-sm">Your Username</label>
-    <input id="username" name="_username" value="{{ last_username }}" type="text" placeholder="Username" class="form-control mb">
+    Login:
+    <input name="_username" value="" type="text">
 
-    <label for="" class="text-uppercase text-sm">Password</label>
-    <input id="password" name="_password" type="password" placeholder="Password" class="form-control mb">
+    Password:
+    <input name="_password" type="password">
 
-    <button class="btn btn-primary btn-block" type="submit">LOGIN</button>
+    <button type="submit">LOGIN</button>
 
 </form>

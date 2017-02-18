@@ -12,12 +12,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-
-
-        return $this->render("@MyShopDefault/Default/index.html.twig", [
-            "newsList" => "",
-            "productList" => '...'
-        ]);
+        return $this->render("@MyShopDefault/Default/index.html.twig");
     }
 
     public function createSomeProductAction()
