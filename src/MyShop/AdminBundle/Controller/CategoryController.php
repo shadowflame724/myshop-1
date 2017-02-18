@@ -16,28 +16,29 @@ class CategoryController extends Controller
     */
     public function treeAction()
     {
-        $categoryList = $this->getDoctrine()->getManager()->getRepository("MyShopDefaultBundle:Category")->findAll();
+        $categoryList = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Category")->findAll();
 
-        $res = [];
-
+        $results = [];
         /** @var Category $cat */
         foreach ($categoryList as $cat)
         {
-            $parentId = '#';
             if ($cat->getParentCategory() !== null) {
-                $parentId = $cat->getParentCategory()->getId();
+                $idParent = $cat->getParentCategory()->getId();
+            } else {
+                $idParent = "#";
             }
 
-            $res[] = [
-                'id' => $cat->getId(),
-                'parent' => $parentId,
-                'text' => $cat->getName(),
-                'state' => ['opened' => true]
+            $results[] = [
+                "id" => $cat->getId(),
+                "parent" => $idParent,
+                "text" => $cat->getName() . " <a href='#'>[X]</a><a href='#'>[E]</a>"
             ];
         }
 
+        $dataJson = json_encode($results);
+
         return [
-            "catDataJson" => json_encode($res)
+            "categoryListJson" => $dataJson
         ];
     }
 
@@ -47,22 +48,17 @@ class CategoryController extends Controller
     public function listAction($idParentCategory = null)
     {
         $manager = $categoryList = $this->getDoctrine()->getManager();
-        $result = [];
         $viewData = [];
 
-        if ($idParentCategory !== null) {
-            $dql = "select hello from MyShopDefaultBundle:Category hello where hello.parentCategory = :idParent";
-            $result = $manager->createQuery($dql)
-                ->setParameter("idParent", $idParentCategory)
-                ->getResult();
-
-            $viewData["categoryCurrent"] = $manager->getRepository("MyShopDefaultBundle:Category")->find($idParentCategory);
-        } else {
-            $dql = "select hello from MyShopDefaultBundle:Category hello where hello.parentCategory is null";
-            $result = $manager->createQuery($dql)->getResult();
+        if (is_null($idParentCategory))
+        {
+            $viewData["categoryList"] = $manager->createQuery("select cat from MyShopDefaultBundle:Category cat where cat.parentCategory is null")->getResult();
         }
-
-        $viewData["categoryList"] = $result;
+        else {
+            $parentCategory = $manager->getRepository("MyShopDefaultBundle:Category")->find($idParentCategory);
+            $viewData["categoryList"] = $parentCategory->getChildrenCategories();
+            $viewData["categoryParent"] = $parentCategory;
+        }
 
         return $viewData;
     }
@@ -74,8 +70,6 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
-
-        $this->getParameter("my_test_param");
 
         if ($request->isMethod("POST"))
         {
