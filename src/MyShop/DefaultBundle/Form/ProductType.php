@@ -2,6 +2,7 @@
 
 namespace MyShop\DefaultBundle\Form;
 
+use MyShop\DefaultBundle\Form\Type\EntityTreeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -27,7 +28,7 @@ class ProductType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => "Описание товара"
             ])
-            ->add('category', EntityType::class, [
+            ->add('category', EntityTreeType::class, [
                 "class" => "MyShopDefaultBundle:Category",
                 "choice_label" => "name",
                 "label" => "Категория"

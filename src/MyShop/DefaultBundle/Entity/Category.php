@@ -56,6 +56,11 @@ class Category
     {
         $this->productList = new ArrayCollection();
     }
+    
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function addProduct(Product $product)
     {
