@@ -1,4 +1,35 @@
 <?php
+
+$password = "my_password";
+
+$res = md5($password);
+
+echo $res;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+die();
+
 $data = array(
     'A' => array(
         'B' => array( 'X', 'D', 'Y'),
@@ -11,10 +42,6 @@ $data = array(
 );
 
 
-function rep($level) {
-    return '<br/>' . str_repeat("-", $level * 5);
-}
-
 function tree($data, $level = 0)
 {
     if (!is_array($data))
@@ -24,7 +51,7 @@ function tree($data, $level = 0)
     foreach ($data as $key => $value)
     {
         // выводим рутовый эллемент (ключ рутового эллемента)
-        $res .= rep($level) . $key;
+        $res .= '<br/>' . str_repeat("-", $level * 5) . $key;
 
         // если есть дети то заходим в функцию еще раз
         if(is_array($value)) {
@@ -33,10 +60,17 @@ function tree($data, $level = 0)
 
         // если детей нет, то выводим значение рутового эллемента
         if(is_string($value)) {
-            $res .= rep($level + 1) . $value;
+            $res .= '<br/>' . str_repeat("-", ($level + 1) * 5) . $value;
         }
     }
 
     return $res;
 }
-echo tree($data, 0);
+//echo tree($data, 0);
+
+function foo($item)
+{
+    var_dump($item);
+}
+
+var_dump($data);

@@ -44,6 +44,12 @@ my_shop_admin.product_photo_list:
     requirements:
         idProduct: \d+
 
+my_shop_admin.product_photo_send_mail:
+    path:   /product/photo/{id}/sendmail
+    defaults: { _controller: MyShopAdminBundle:ProductPhoto:sendToMail }
+    requirements:
+        id: \d+
+
 my_shop_admin.category_add:
     path:   /category/add/{idParent}
     defaults: { _controller: MyShopAdminBundle:Category:add, idParent:null }
@@ -57,3 +63,7 @@ my_shop_admin.category_list:
 my_shop_admin.category_tree:
     path:   /category/tree
     defaults: { _controller: MyShopAdminBundle:Category:tree }
+
+my_shop_admin.user_add:
+    path: /user/add
+    defaults: { _controller: MyShopAdminBundle:User:add }

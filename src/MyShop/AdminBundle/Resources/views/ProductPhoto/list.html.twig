@@ -16,6 +16,7 @@
             <td>
                 <a href="#">Редактирование</a>
                 <a href="#">Удалить</a>
+                <a href="{{ path("my_shop_admin.product_photo_send_mail", {id:photo.id}) }}">Отправить на емеил</a>
             </td>
         </tr>
     {% endfor %}

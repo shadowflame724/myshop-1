@@ -47,7 +47,7 @@ class CategoryController extends Controller
     */
     public function listAction($idParentCategory = null)
     {
-        $manager = $categoryList = $this->getDoctrine()->getManager();
+        $manager = $this->getDoctrine()->getManager();
         $viewData = [];
 
         if (is_null($idParentCategory))

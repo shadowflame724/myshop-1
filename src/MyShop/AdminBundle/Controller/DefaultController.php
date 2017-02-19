@@ -12,7 +12,8 @@ class DefaultController extends Controller
     */
     public function indexAction()
     {
-        $this->forward("MyShopDefaultBundle:Default:index");
+        $user = $this->getUser();
+        var_dump($user);
 
         return [];
     }

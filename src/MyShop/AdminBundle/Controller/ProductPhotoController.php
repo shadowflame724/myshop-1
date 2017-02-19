@@ -25,6 +25,37 @@ class ProductPhotoController extends Controller
         ];
     }
 
+    public function sendToMailAction($id)
+    {
+        $photo = $this->getDoctrine()->getManager()->getRepository("MyShopDefaultBundle:ProductPhoto")->find($id);
+        $photoFile = $this->get("kernel")->getRootDir() . "/../web/photos/" . $photo->getFileName();
+
+        $message = new \Swift_Message();
+        $message->setTo("igorlessonhillel@gmail.com");
+        $message->addFrom("igorphphillel@gmail.com");
+
+//        $htmlResult = $this->renderView("MyShopAdminBundle::email.html.twig", [
+//            "name" => "Svetlana"
+//        ]);
+
+        //$message->setBody($htmlResult, "text/html");
+
+        $message->setBody("Take a photo!", "text/html");
+
+        $message->attach(\Swift_Attachment::fromPath($photoFile));
+
+        $mailer = $this->get("mailer");
+        $mailer->send($message);
+
+        $idProduct = $photo->getProduct()->getId();
+
+        $this->addFlash("success", "Photo sent!");
+
+        return $this->redirectToRoute("my_shop_admin.product_photo_list", [
+            'idProduct' => $idProduct
+        ]);
+    }
+
     /**
      * @Template()
     */
