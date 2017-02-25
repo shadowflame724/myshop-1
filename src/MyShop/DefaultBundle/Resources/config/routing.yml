@@ -32,3 +32,11 @@ myshop.api.json.product_details:
 myshop.api.json_rpc:
     path:   /api/jsonrpc
     defaults: { _controller: MyShopDefaultBundle:API/JsonRPC/JsonRpc:index }
+
+login_customer:
+    path: /customer/login
+    defaults: { _controller: MyShopDefaultBundle:Customer:login }
+
+myshop.basket:
+    path: /basket
+    defaults: { _controller: MyShopDefaultBundle:Basket:index }

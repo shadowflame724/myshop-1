@@ -13,6 +13,11 @@
                 </ul>
             </td>
             <td valign="top">
+                {% for flash_message in app.session.flashBag.get('success') %}
+                    <div class="flash-notice">
+                        <b>{{ flash_message }}</b>
+                    </div>
+                {% endfor %}
                 {% block body %}
                 {% endblock %}
             </td>
