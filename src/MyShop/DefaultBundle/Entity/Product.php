@@ -4,6 +4,7 @@ namespace MyShop\DefaultBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -26,6 +27,13 @@ class Product
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255)
+     * @Assert\NotBlank(message="Поле модель не должно быть пустым")
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 254,
+     *     minMessage="Название модели слишком короткое. Минимум {{ limit }} символов",
+     *     maxMessage="Название модели слишком длинное. Максимум {{ limit }} символов"
+     * )
      */
     private $model;
 
@@ -33,6 +41,11 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     * @Assert\NotBlank(message="Указание цены для товара является обязательным")
+     * @Assert\Type(
+     *     type="float",
+     *     message="Цена должна быть целым или дробным числом"
+     * )
      */
     private $price;
 
@@ -47,6 +60,9 @@ class Product
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreatedAt", type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      */
     private $dateCreatedAt;
 
@@ -55,6 +71,7 @@ class Product
      *
      * @ORM\ManyToOne(targetEntity="MyShop\DefaultBundle\Entity\Category", inversedBy="productList")
      * @ORM\JoinColumn(name="id_category", referencedColumnName="id", onDelete="CASCADE")
+     *
     */
     private $category;
 
@@ -65,15 +82,61 @@ class Product
     */
     private $photos;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icon_file_name", type="string", length=255, nullable=true)
+    */
+    private $iconFileName;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_show_on_main_page", type="boolean")
+    */
+    private $isShowOnMainPage;
+
     public function __construct()
     {
         $date = new \DateTime("now");
         $this->setDateCreatedAt($date);
 
         $this->photos = new ArrayCollection();
+
+        $this->setIsShowOnMainPage(false);
     }
 
-    
+    /**
+     * @return boolean
+     */
+    public function getIsShowOnMainPage()
+    {
+        return $this->isShowOnMainPage;
+    }
+
+    /**
+     * @param boolean $isShowOnMainPage
+     */
+    public function setIsShowOnMainPage($isShowOnMainPage)
+    {
+        $this->isShowOnMainPage = boolval($isShowOnMainPage);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconFileName()
+    {
+        return $this->iconFileName;
+    }
+
+    /**
+     * @param string $iconFileName
+     */
+    public function setIconFileName($iconFileName)
+    {
+        $this->iconFileName = $iconFileName;
+    }
 
     /**
      * @return Category

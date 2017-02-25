@@ -1,12 +1,12 @@
 <html>
 <head>
-    <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />\
+    <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />
     {% block head_js %}{% endblock %}
 </head>
 <body>
 <table border="1" style="width: 100%">
     <tr>
-        <td colspan="2"><h3>Admin panel</h3> Welcome {{ app.user }} !!! <a href="{{ path("logout") }}">Logout</a> </td>
+        <td colspan="2"><h3>Admin panel</h3> Welcome {{ app.user }} !!! <a href="{{ path("logout") }}">Logout</a></td>
     </tr>
     <tr>
         <td valign="top" style="width: 250px">
@@ -19,6 +19,16 @@
             </ul>
         </td>
         <td valign="top">
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <div class="flash-notice" style="color: red">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+            {% for flash_message in app.session.flashBag.get('success') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
             {% block body %}{% endblock %}
         </td>
     </tr>

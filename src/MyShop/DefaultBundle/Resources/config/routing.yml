@@ -16,3 +16,19 @@ myshop.product_list:
 myshop.product_create:
     path: /product/create
     defaults: { _controller: MyShopDefaultBundle:Default:createSomeProduct }
+
+myshop.api.xml.product_details:
+    path:   /api/product/{id}.xml
+    defaults: { _controller: MyShopDefaultBundle:API/REST/Product:detailsXml }
+    requirements:
+        id: \d+
+
+myshop.api.json.product_details:
+    path:   /api/product/{id}.json
+    defaults: { _controller: MyShopDefaultBundle:API/REST/Product:detailsJson }
+    requirements:
+        id: \d+
+
+myshop.api.json_rpc:
+    path:   /api/jsonrpc
+    defaults: { _controller: MyShopDefaultBundle:API/JsonRPC/JsonRpc:index }

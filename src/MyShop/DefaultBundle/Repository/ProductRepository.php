@@ -10,4 +10,10 @@ namespace MyShop\DefaultBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getProductListForMainPage()
+    {
+        $dql = 'select prod from MyShopDefaultBundle:Product prod where prod.isShowOnMainPage = true';
+        $products = $this->getEntityManager()->createQuery($dql)->getResult();
+        return $products;
+    }
 }

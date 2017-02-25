@@ -40,6 +40,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        webRootDir: %kernel.root_dir%/../web
 
 # Doctrine Configuration
 doctrine:
@@ -65,8 +67,11 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
+#    logging:    false
+    transport: smtp
+    host:      "smtp.gmail.com"
+    port:       465
+    encryption: ssl
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+#    spool:     { type: memory }
