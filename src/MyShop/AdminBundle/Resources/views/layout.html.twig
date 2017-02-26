@@ -19,6 +19,12 @@
             </ul>
         </td>
         <td valign="top">
+            <div>
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <b style="color: red">Ошибка!</b> {{ flash_message }}<br>
+            {% endfor %}
+            </div>
+
             {% block body %}{% endblock %}
         </td>
     </tr>

@@ -4,10 +4,13 @@ namespace MyShop\AdminBundle\Controller;
 
 use MyShop\DefaultBundle\Entity\Product;
 use MyShop\DefaultBundle\Form\ProductType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 class ProductController extends Controller
 {
@@ -31,6 +34,16 @@ class ProductController extends Controller
         ]);
     }
 
+//    /**
+//     * @Template()
+//     * @Route("/product/details/{id}")
+//     * @Entity("product", expr="repository.find(id)")
+//    */
+//    public function detailsAction()
+//    {
+//
+//    }
+
     /**
      * @Template()
     */
@@ -49,10 +62,8 @@ class ProductController extends Controller
     /**
      * @Template()
     */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, Product $product)
     {
-        $product = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->find($id);
-
         $form = $this->createForm(ProductType::class, $product);
 
         /******************************************/
@@ -94,11 +105,27 @@ class ProductController extends Controller
 
             if ($form->isSubmitted())
             {
-                $logger = $this->get("logger");
-                $logger->addInfo(json_encode([
-                    "product id" => $product->getId(),
-                    "price" => $product->getPrice()
-                ]));
+                /** @var ConstraintViolationList $errorList */
+                $errorList = $this->get('validator')->validate($product);
+                if ($errorList->count() > 0)
+                {
+                    foreach ($errorList as $error) {
+                        $this->addFlash('error', $error->getMessage());
+                    }
+
+                    return $this->redirectToRoute("my_shop_admin.product_add");
+                }
+
+                $filesAr = $request->files->get("myshop_defaultbundle_product");
+
+                /** @var UploadedFile $photoFile */
+                $photoFile = $filesAr["iconPhoto"];
+
+                $dir = $this->get("kernel")->getRootDir() . '/../web/photos/';
+                $iconFileName = rand(10000, 999999) . '.' . $photoFile->getClientOriginalExtension();
+                $photoFile->move($dir, $iconFileName);
+
+                $product->setIconFileName($iconFileName);
 
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($product);

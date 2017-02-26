@@ -4,6 +4,8 @@ namespace MyShop\DefaultBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -26,6 +28,13 @@ class Product
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255)
+     * @Assert\NotBlank(message="Поле модель обязательное для заполнение")
+     * @Assert\Length(
+     *     min="2",
+     *     max="255",
+     *     minMessage="Название модели слишком короткое. Минимум {{ limit }} символа",
+     *     maxMessage="Название модели слишкое длинное. Максимум {{ limit }} символов"
+     * )
      */
     private $model;
 
@@ -33,6 +42,12 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+     *
+     * @Assert\NotBlank(message="Поле цены обязательно для заполнения")
+     * @Assert\Type(
+     *     type="float",
+     *     message="Цена должна быть дробным или целым числом"
+     * )
      */
     private $price;
 
@@ -65,6 +80,13 @@ class Product
     */
     private $photos;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icon_file_name", type="string", length=255, nullable=true)
+    */
+    private $iconFileName;
+
     public function __construct()
     {
         $date = new \DateTime("now");
@@ -73,7 +95,21 @@ class Product
         $this->photos = new ArrayCollection();
     }
 
-    
+    /**
+     * @return mixed
+     */
+    public function getIconFileName()
+    {
+        return $this->iconFileName;
+    }
+
+    /**
+     * @param mixed $iconFileName
+     */
+    public function setIconFileName($iconFileName)
+    {
+        $this->iconFileName = $iconFileName;
+    }
 
     /**
      * @return Category
