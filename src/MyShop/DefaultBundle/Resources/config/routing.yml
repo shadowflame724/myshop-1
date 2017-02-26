@@ -17,6 +17,7 @@ myshop.product_create:
     path: /product/create
     defaults: { _controller: MyShopDefaultBundle:Default:createSomeProduct }
 
+<<<<<<< HEAD
 myshop.api.product_details:
     path:   /api/rest/product/{id}.json
     defaults: { _controller: MyShopDefaultBundle:API/REST/Product:details }
@@ -24,3 +25,20 @@ myshop.api.product_details:
 myshop.api.product_details_xml:
     path:   /api/rest/product/{id}.xml
     defaults: { _controller: MyShopDefaultBundle:API/REST/Product:detailsXml }
+=======
+myshop.api.xml.product_details:
+    path:   /api/product/{id}.xml
+    defaults: { _controller: MyShopDefaultBundle:API/REST/Product:detailsXml }
+    requirements:
+        id: \d+
+
+myshop.api.json.product_details:
+    path:   /api/product/{id}.json
+    defaults: { _controller: MyShopDefaultBundle:API/REST/Product:detailsJson }
+    requirements:
+        id: \d+
+
+myshop.api.json_rpc:
+    path:   /api/jsonrpc
+    defaults: { _controller: MyShopDefaultBundle:API/JsonRPC/JsonRpc:index }
+>>>>>>> dev

@@ -5,6 +5,10 @@ namespace MyShop\DefaultBundle\Form;
 use MyShop\DefaultBundle\Form\Type\EntityTreeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+>>>>>>> dev
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -38,6 +42,15 @@ class ProductType extends AbstractType
                 "class" => "MyShopDefaultBundle:Category",
                 "choice_label" => "name",
                 "label" => "Категория"
+            ])
+            ->add('isShowOnMainPage', CheckboxType::class, [
+                'label' => 'Отображать товар на главной',
+                'required' => false
+            ])
+            ->add('iconFile', FileType::class, [
+                'mapped' => false,
+                'label' => 'Иконка к товару',
+                'required' => false
             ])
         ;
     }

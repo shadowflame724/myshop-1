@@ -12,7 +12,11 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render("@MyShopDefault/Default/index.html.twig");
+        $products = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->getProductListForMainPage();
+
+        return $this->render("@MyShopDefault/Default/index.html.twig", [
+            'productList' => $products
+        ]);
     }
 
     public function createSomeProductAction()

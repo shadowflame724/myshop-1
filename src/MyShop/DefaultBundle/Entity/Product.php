@@ -4,7 +4,10 @@ namespace MyShop\DefaultBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+=======
+>>>>>>> dev
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -28,12 +31,21 @@ class Product
      * @var string
      *
      * @ORM\Column(name="model", type="string", length=255)
+<<<<<<< HEAD
      * @Assert\NotBlank(message="Поле модель обязательное для заполнение")
      * @Assert\Length(
      *     min="2",
      *     max="255",
      *     minMessage="Название модели слишком короткое. Минимум {{ limit }} символа",
      *     maxMessage="Название модели слишкое длинное. Максимум {{ limit }} символов"
+=======
+     * @Assert\NotBlank(message="Поле модель не должно быть пустым")
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 254,
+     *     minMessage="Название модели слишком короткое. Минимум {{ limit }} символов",
+     *     maxMessage="Название модели слишком длинное. Максимум {{ limit }} символов"
+>>>>>>> dev
      * )
      */
     private $model;
@@ -42,11 +54,18 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float")
+<<<<<<< HEAD
      *
      * @Assert\NotBlank(message="Поле цены обязательно для заполнения")
      * @Assert\Type(
      *     type="float",
      *     message="Цена должна быть дробным или целым числом"
+=======
+     * @Assert\NotBlank(message="Указание цены для товара является обязательным")
+     * @Assert\Type(
+     *     type="float",
+     *     message="Цена должна быть целым или дробным числом"
+>>>>>>> dev
      * )
      */
     private $price;
@@ -62,6 +81,9 @@ class Product
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreatedAt", type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      */
     private $dateCreatedAt;
 
@@ -70,6 +92,7 @@ class Product
      *
      * @ORM\ManyToOne(targetEntity="MyShop\DefaultBundle\Entity\Category", inversedBy="productList")
      * @ORM\JoinColumn(name="id_category", referencedColumnName="id", onDelete="CASCADE")
+     *
     */
     private $category;
 
@@ -87,15 +110,52 @@ class Product
     */
     private $iconFileName;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_show_on_main_page", type="boolean")
+    */
+    private $isShowOnMainPage;
+
+>>>>>>> dev
     public function __construct()
     {
         $date = new \DateTime("now");
         $this->setDateCreatedAt($date);
 
         $this->photos = new ArrayCollection();
+
+        $this->setIsShowOnMainPage(false);
     }
 
     /**
+     * @return boolean
+     */
+    public function getIsShowOnMainPage()
+    {
+        return $this->isShowOnMainPage;
+    }
+
+    /**
+     * @param boolean $isShowOnMainPage
+     */
+    public function setIsShowOnMainPage($isShowOnMainPage)
+    {
+        $this->isShowOnMainPage = boolval($isShowOnMainPage);
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconFileName()
+    {
+        return $this->iconFileName;
+    }
+
+    /**
+<<<<<<< HEAD
      * @return mixed
      */
     public function getIconFileName()
@@ -105,6 +165,9 @@ class Product
 
     /**
      * @param mixed $iconFileName
+=======
+     * @param string $iconFileName
+>>>>>>> dev
      */
     public function setIconFileName($iconFileName)
     {

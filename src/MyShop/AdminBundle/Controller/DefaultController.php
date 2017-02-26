@@ -12,9 +12,6 @@ class DefaultController extends Controller
     */
     public function indexAction()
     {
-        $user = $this->getUser();
-        var_dump($user);
-
         return [];
     }
 }
