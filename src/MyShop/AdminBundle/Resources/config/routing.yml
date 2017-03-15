@@ -71,3 +71,15 @@ my_shop_admin.user_add:
 my_shop_admin.load_demo_users:
     path: /loaddemo/users
     defaults: { _controller: MyShopAdminBundle:Default:loadUsers }
+
+my_shop_admin.products_import_csv:
+    path:   /products/import/csv
+    defaults: { _controller: MyShopAdminBundle:ProductsLoader:importProducts }
+
+my_shop_admin.products_export_csv:
+    path:   /products/export/csv
+    defaults: { _controller: MyShopAdminBundle:ProductsLoader:exportProducts }
+
+my_shop_admin.testfile:
+    path:   /testfile
+    defaults: { _controller: MyShopAdminBundle:Product:testfile }

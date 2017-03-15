@@ -178,4 +178,79 @@ class ProductController extends Controller
             "form" => $form->createView()
         ];
     }
+
+    /**
+     * @Template()
+    */
+    public function testfileAction(Request $request)
+    {
+        $dir = $this->get("kernel")->getRootDir() . "/../src/MyShop/DefaultBundle/DataFixtures/Files";
+        $files = scandir($dir);
+
+        $dirTo = $this->get("kernel")->getRootDir() . "/../web/photos/";
+
+        $manager = $this->getDoctrine()->getManager();
+
+        foreach ($files as $file)
+        {
+            if ($file !== "." && $file !== "..")
+            {
+                $fileFullPath =  $dir . "/" . $file;
+                $fileFullPath = realpath($fileFullPath);
+
+                copy($fileFullPath, $dirTo . $file);
+
+                $product = new Product();
+                $product->setModel(rand());
+                $product->setPrice(rand());
+                $product->setDescription(rand());
+                $product->setIconFileName($file);
+
+                $manager->persist($product);
+                $manager->flush();
+            }
+        }
+
+
+        die();
+
+
+//        $files = $request->files; // $_FILES
+//
+//        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $myFile */
+//        $myFile = $files->get("test_file");
+//
+//        $appDir = $this->get("kernel")->getRootDir() . "/../web/";
+//        $myFile->move($appDir, $myFile->getClientOriginalName());
+
+        return [];
+    }
 }
+
+/***
+/Users/igor/projects/school/myshop/src/MyShop/AdminBundle/Controller/ProductController.php:189:
+object(Symfony\Component\HttpFoundation\FileBag)[14]
+  protected 'parameters' =>
+    array (size=1)
+      'test_file' =>
+        object(Symfony\Component\HttpFoundation\File\UploadedFile)[15]
+          private 'test' => boolean false
+          private 'originalName' => string 'Screen Shot 2017-03-15 at 19.10.01.png' (length=38)
+          private 'mimeType' => string 'image/png' (length=9)
+          private 'size' => int 48433
+          private 'error' => int 0
+          private 'pathName' (SplFileInfo) => string '/private/var/folders/9b/q3dspccj2zd15dpv8048_rg80000gn/T/php5GXGh0' (length=66)
+          private 'fileName' (SplFileInfo) => string 'php5GXGh0' (length=9)
+
+
+
+
+
+
+
+
+
+
+
+
+
