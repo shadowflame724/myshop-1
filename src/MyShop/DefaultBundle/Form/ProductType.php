@@ -30,6 +30,11 @@ class ProductType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => "Описание товара"
             ])
+            ->add('iconPhoto', FileType::class, [
+                'label' => 'Иконка товара',
+                'mapped' => false,
+                'required' => false
+            ])
             ->add('category', EntityTreeType::class, [
                 "class" => "MyShopDefaultBundle:Category",
                 "choice_label" => "name",

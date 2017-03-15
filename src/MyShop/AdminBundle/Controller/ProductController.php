@@ -4,6 +4,7 @@ namespace MyShop\AdminBundle\Controller;
 
 use MyShop\DefaultBundle\Entity\Product;
 use MyShop\DefaultBundle\Form\ProductType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,6 +42,16 @@ class ProductController extends Controller
             "productList" => $productList
         ]);
     }
+
+//    /**
+//     * @Template()
+//     * @Route("/product/details/{id}")
+//     * @Entity("product", expr="repository.find(id)")
+//    */
+//    public function detailsAction()
+//    {
+//
+//    }
 
     /**
      * @Template()
@@ -131,6 +142,7 @@ class ProductController extends Controller
                     foreach ($errorList as $error) {
                         $this->addFlash("error", ucfirst($error->getPropertyPath()) . ': ' . $error->getMessage());
                     }
+
                     return $this->redirectToRoute("my_shop_admin.product_add");
                 }
 

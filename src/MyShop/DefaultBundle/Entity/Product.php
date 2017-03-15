@@ -96,6 +96,7 @@ class Product implements \JsonSerializable
     */
     private $isShowOnMainPage;
 
+
     public function __construct()
     {
         $date = new \DateTime("now");
