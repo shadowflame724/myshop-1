@@ -5,12 +5,13 @@
 
     <a href="{{ path("my_shop_admin.product_photo_add", {idProduct:product.id}) }}">Добавить фото</a>
     <table>
+
     {% for photo in product.getPhotos() %}
         <tr>
             <td>{{ photo.getTitle() }}</td>
             <td>
                 <a href="/photos/{{ photo.getFileName() }}">
-                <img src="/photos/{{ photo.getSmallFileName() }}" />
+                    <img src="/photos/{{ photo.getSmallFileName() }}" />
                 </a>
             </td>
             <td>

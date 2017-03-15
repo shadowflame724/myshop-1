@@ -19,6 +19,7 @@ class ProductController extends Controller
         $xml->addChild('description', $product->getDescription());
         $xml->addChild('date', $product->getDateCreatedAt()->format('d.m.Y'));
 
+        //         HTTP                     ://    ROZETKA.UA                 /photos/567.jpg
         $baseUrl = $request->getScheme() . '://' . $request->getHttpHost() . '/photos/';
 
         if ($product->getIconFileName() !== "") {

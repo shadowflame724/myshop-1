@@ -67,3 +67,7 @@ my_shop_admin.category_tree:
 my_shop_admin.user_add:
     path: /user/add
     defaults: { _controller: MyShopAdminBundle:User:add }
+
+my_shop_admin.load_demo_users:
+    path: /loaddemo/users
+    defaults: { _controller: MyShopAdminBundle:Default:loadUsers }

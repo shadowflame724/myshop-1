@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="product")
  * @ORM\Entity(repositoryClass="MyShop\DefaultBundle\Repository\ProductRepository")
  */
-class Product
+class Product implements \JsonSerializable
 {
     /**
      * @var int
@@ -104,6 +104,15 @@ class Product
         $this->photos = new ArrayCollection();
 
         $this->setIsShowOnMainPage(false);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'model' => $this->getModel(),
+            'price' => $this->getPrice()
+        ];
     }
 
     /**

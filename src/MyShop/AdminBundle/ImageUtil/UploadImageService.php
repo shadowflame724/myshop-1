@@ -40,7 +40,7 @@ class UploadImageService
     /**
      * @return UploadedImageResult
     */
-    public function uploadImage(UploadedFile $uploadedFile, $productId)
+    public function uploadImage(UploadedFile $uploadedFile, $productId, $width = 250, $height = 200)
     {
         $imageNameGenerator = $this->imageNameGenerator;
 
@@ -56,7 +56,7 @@ class UploadImageService
         }
 
         $img = new ImageResize($photoDirPath . $photoFileName);
-        $img->resizeToBestFit(250, 200);
+        $img->resizeToBestFit($width, $height);
         $smallPhotoName = "small_" . $photoFileName;
         $img->save($photoDirPath . $smallPhotoName);
 

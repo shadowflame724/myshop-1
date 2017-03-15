@@ -22,7 +22,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 5; $i++)
+        for ($i = 0; $i < 50; $i++)
         {
             $user = new User();
             $user->setEmail(rand() . '@gmail.com');

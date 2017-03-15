@@ -14,4 +14,15 @@ class DefaultController extends Controller
     {
         return [];
     }
+
+    public function loadUsersAction()
+    {
+        set_time_limit(0);
+        ignore_user_abort();
+
+        $this->get("load_my_pre_data")->loadUsers();
+        $this->addFlash("success", "Демо пользователи загружены!");
+
+        return $this->redirectToRoute("my_shop_admin.index");
+    }
 }

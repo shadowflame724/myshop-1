@@ -15,6 +15,13 @@ use Symfony\Component\Validator\ConstraintViolationList;
 
 class ProductController extends Controller
 {
+//    private $manager;
+//
+//    public function __construct()
+//    {
+//        $this->manager = $this->getDoctrine()->getManager();
+//    }
+
     public function deleteAction($id)
     {
         $product = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->find($id);

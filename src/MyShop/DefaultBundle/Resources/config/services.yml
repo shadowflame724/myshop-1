@@ -1,3 +1,10 @@
 services:
-    myshop.news_manager:
-        class: MyShop\DefaultBundle\Manager\NewsManager
+    curl_client:
+        class: MyShop\DefaultBundle\Controller\API\Client\CurlClient
+        arguments:
+            - "%json_rpc_server_host%"
+
+    load_my_pre_data:
+        class: MyShop\DefaultBundle\PreData\LoadMyPreData
+        arguments:
+            - "@doctrine.orm.entity_manager"

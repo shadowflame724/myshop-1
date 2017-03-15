@@ -13,6 +13,7 @@ parameters:
     mailer_password: 1mZasUinFYt7iPP2
     secret: f14419c5e9a8d3494eea8163a14c70d05148c42a
     image_upload_dir: "%kernel.root_dir%/../web/photos"
+    json_rpc_server_host: "http://127.0.0.1/api/jsonrpc"
     upload_image_type_list:
         -
             - jpeg

@@ -40,3 +40,10 @@ login_customer:
 myshop.basket:
     path: /basket
     defaults: { _controller: MyShopDefaultBundle:Basket:index }
+
+
+myshop.curl_client_json_rpc:
+    path:   /client/jsonrpc/{idProduct}
+    defaults: { _controller: MyShopDefaultBundle:Default:clientCurl }
+    requirements:
+        idProduct: \d+

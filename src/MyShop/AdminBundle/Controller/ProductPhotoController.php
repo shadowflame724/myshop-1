@@ -20,6 +20,7 @@ class ProductPhotoController extends Controller
     {
         $product = $this->getDoctrine()->getManager()->getRepository("MyShopDefaultBundle:Product")->find($idProduct);
 
+
         return [
             "product" => $product
         ];
