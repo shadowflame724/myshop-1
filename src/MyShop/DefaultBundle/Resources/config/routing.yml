@@ -56,3 +56,7 @@ myshop.curl_client_json_rpc:
     defaults: { _controller: MyShopDefaultBundle:Default:clientCurl }
     requirements:
         idProduct: \d+
+
+myshop.page:
+    path:   /{pageKey}
+    defaults: { _controller: MyShopDefaultBundle:Page:index }

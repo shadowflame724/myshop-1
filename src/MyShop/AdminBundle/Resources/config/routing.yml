@@ -83,3 +83,17 @@ my_shop_admin.products_export_csv:
 my_shop_admin.testfile:
     path:   /testfile
     defaults: { _controller: MyShopAdminBundle:Product:testfile }
+
+my_shop_admin.page_list:
+    path:   /pages
+    defaults: { _controller: MyShopAdminBundle:Page:index }
+
+my_shop_admin.page_add:
+    path:   /page/add
+    defaults: { _controller: MyShopAdminBundle:Page:add }
+
+my_shop_admin.page_edit:
+    path:   /page/{id}/edit
+    defaults: { _controller: MyShopAdminBundle:Page:edit }
+    requirements:
+        id: \d+

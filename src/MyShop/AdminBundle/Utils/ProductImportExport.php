@@ -48,24 +48,33 @@ class ProductImportExport
 
         set_time_limit(0);
 
-        if ($clearProducts == true)
-        {
-            $this->manager->getConnection()->exec("SET foreign_key_checks = 0");
-            $this->manager->getConnection()->exec("truncate product");
-        }
+//        if ($clearProducts == true)
+//        {
+//            $this->manager->getConnection()->exec("SET foreign_key_checks = 0");
+//            $this->manager->getConnection()->exec("truncate product");
+//        }
 
-        fgetcsv($fh);
-        while ( ($data = fgetcsv($fh)) != FALSE )
-        {
-            if ($data[0] !== "" and $data[1] !== "" and $data[2] !== "") {
-                $product = new Product();
-                $product->setModel($data[0]);
-                $product->setDescription($data[1]);
-                $product->setPrice($data[2]);
+        $this->manager->beginTransaction();
 
-                $this->manager->persist($product);
-                $this->manager->flush();
+        try {
+            fgetcsv($fh);
+            while ( ($data = fgetcsv($fh)) != FALSE )
+            {
+                if ($data[0] !== "" and $data[1] !== "" and $data[2] !== "") {
+                    $product = new Product();
+                    $product->setModel($data[0]);
+                    $product->setDescription($data[1]);
+                    $product->setPrice($data[2]);
+
+                    $this->manager->persist($product);
+                    $this->manager->flush();
+                }
             }
+
+            $this->manager->commit();
+
+        } catch (\Exception $ex) {
+            $this->manager->rollback();
         }
 
         fclose($fh);

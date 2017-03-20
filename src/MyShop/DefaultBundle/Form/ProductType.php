@@ -2,6 +2,7 @@
 
 namespace MyShop\DefaultBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use MyShop\DefaultBundle\Form\Type\EntityTreeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -27,7 +28,7 @@ class ProductType extends AbstractType
             ->add('price', NumberType::class, [
                 "label" => 'Цена товара'
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
                 'label' => "Описание товара"
             ])
             ->add('iconPhoto', FileType::class, [

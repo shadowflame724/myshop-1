@@ -8,3 +8,8 @@ services:
         class: MyShop\DefaultBundle\PreData\LoadMyPreData
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    myshop.product_mapper:
+        class: MyShop\DefaultBundle\Mapper\ProductMapper
+        arguments:
+            - "@validator"

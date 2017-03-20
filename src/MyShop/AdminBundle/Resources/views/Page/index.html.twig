@@ -1,0 +1,24 @@
+{% extends "@MyShopAdmin/layout.html.twig" %}
+
+{% block body %}
+    <a href="{{ path('my_shop_admin.page_add') }}">Добавить</a><br>
+    <table>
+        <tr>
+            <td>Ключ (уникальный)</td>
+            <td>Заголовок</td>
+            <td>Дата создания</td>
+            <td></td>
+        </tr>
+    {% for page in pageList %}
+        <tr>
+            <td>{{ page.pageKey }}</td>
+            <td>{{ page.title }}</td>
+            <td>{{ page.dateCreatedAt.format("H:i:s d.m.Y") }}</td>
+            <td>
+                <a href="#">Удалить</a><br>
+                <a href="{{ path('my_shop_admin.page_edit', {id:page.id}) }}">Редактировать</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

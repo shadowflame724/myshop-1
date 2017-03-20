@@ -9,7 +9,7 @@ class DefaultController extends Controller
 {
     /**
      * @Template()
-    */
+     */
     public function indexAction()
     {
         return [];
@@ -26,3 +26,5 @@ class DefaultController extends Controller
         return $this->redirectToRoute("my_shop_admin.index");
     }
 }
+
+
