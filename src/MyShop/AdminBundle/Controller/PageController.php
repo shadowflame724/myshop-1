@@ -16,6 +16,18 @@ class PageController extends Controller
     public function indexAction()
     {
         $pageList = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Page")->getAllPages(true);
+        // 067 70 60 830 иосиф
+
+        // 110 грн балкон гидроизоляция - работа
+        // 320 грн - 10 кв.
+
+        // 120 грн. шпаклевка потолка - кв метр
+
+
+        // 135
+
+        // 170 грн межкомнатная перегородка за метр.
+
 
         return ["pageList" => $pageList];
     }
@@ -68,5 +80,3 @@ class PageController extends Controller
         return ['form' => $form->createView(), 'page' => $page];
     }
 }
-
-

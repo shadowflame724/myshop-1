@@ -4,6 +4,9 @@ namespace MyShop\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -13,6 +16,17 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return [];
+    }
+
+    public function uploadImageAction(Request $request)
+    {
+        /** @var UploadedFile $file */
+        $file = $request->files->get("upload");
+
+        $dir = $this->get("kernel")->getRootDir() . "/../web/photos/";
+        $file->move($dir, $file->getClientOriginalName());
+
+        return new Response("/photos/" . $file->getClientOriginalName());
     }
 
     public function loadUsersAction()

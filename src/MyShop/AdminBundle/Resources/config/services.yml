@@ -1,4 +1,10 @@
 services:
+    myshop_admin.product_subscriber:
+        class: MyShop\AdminBundle\Event\ProductSubscriber
+        tags:
+            - { name: kernel.event_listener, event: product_add_event, method: onProductAddEvent }
+            - { name: kernel.event_listener, event: product_edit_event, method: onProductEditEvent }
+
     myshop_admin.image_uploader:
         class: MyShop\AdminBundle\ImageUtil\UploadImageService
         arguments:
@@ -7,10 +13,15 @@ services:
         calls:
             - ["setUploadImageRootDir", ["%image_upload_dir%"]]
 
-    myshop_admin.check_img:
-        class: MyShop\AdminBundle\ImageUtil\CheckImg
+    myshop_admin.base_check:
+        class: MyShop\AdminBundle\ImageUtil\BaseCheck
+        abstract: true
         arguments:
             - "%upload_image_type_list%"
+
+    myshop_admin.check_img:
+        class: MyShop\AdminBundle\ImageUtil\CheckImg
+        parent: "myshop_admin.base_check"
 
     myshop_admin.image_name_generator:
         class: MyShop\AdminBundle\ImageUtil\ImageNameGenerator
@@ -25,3 +36,4 @@ services:
         class: MyShop\AdminBundle\Utils\ProductImportExport
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@event_dispatcher"

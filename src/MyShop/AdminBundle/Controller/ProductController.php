@@ -2,6 +2,9 @@
 
 namespace MyShop\AdminBundle\Controller;
 
+use MyShop\AdminBundle\Event\ProductAddEvent;
+use MyShop\AdminBundle\ImageUtil\CheckImg;
+use MyShop\AdminBundle\Utils\ProductImportExport;
 use MyShop\DefaultBundle\Entity\Product;
 use MyShop\DefaultBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -153,6 +156,12 @@ class ProductController extends Controller
                     $photoFile = $filesAr["iconFile"];
 
                     $checkImgService = $this->get("myshop_admin.check_img");
+
+
+//                    $checkImgService = new CheckImg(['image/jpeg']);
+//                    $parseCsv = new ProductImportExport($this->get("doctrine.orm.default_entity_manager"));
+//                    $parseCsv->setCheckImage($checkImgService);
+
                     try {
                         $checkImgService->check($photoFile);
                     } catch (\InvalidArgumentException $ex) {
@@ -168,6 +177,9 @@ class ProductController extends Controller
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($product);
                 $manager->flush();
+
+                $event = new ProductAddEvent($product);
+                $this->get("event_dispatcher")->dispatch("product_add_event", $event);
 
                 return $this->redirectToRoute("my_shop_admin.product_list");
             }
@@ -226,31 +238,3 @@ class ProductController extends Controller
         return [];
     }
 }
-
-/***
-/Users/igor/projects/school/myshop/src/MyShop/AdminBundle/Controller/ProductController.php:189:
-object(Symfony\Component\HttpFoundation\FileBag)[14]
-  protected 'parameters' =>
-    array (size=1)
-      'test_file' =>
-        object(Symfony\Component\HttpFoundation\File\UploadedFile)[15]
-          private 'test' => boolean false
-          private 'originalName' => string 'Screen Shot 2017-03-15 at 19.10.01.png' (length=38)
-          private 'mimeType' => string 'image/png' (length=9)
-          private 'size' => int 48433
-          private 'error' => int 0
-          private 'pathName' (SplFileInfo) => string '/private/var/folders/9b/q3dspccj2zd15dpv8048_rg80000gn/T/php5GXGh0' (length=66)
-          private 'fileName' (SplFileInfo) => string 'php5GXGh0' (length=9)
-
-
-
-
-
-
-
-
-
-
-
-
-

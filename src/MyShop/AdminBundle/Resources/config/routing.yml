@@ -97,3 +97,7 @@ my_shop_admin.page_edit:
     defaults: { _controller: MyShopAdminBundle:Page:edit }
     requirements:
         id: \d+
+
+my_shop_admin.upload_image:
+    path:   /upload_image
+    defaults: { _controller: MyShopAdminBundle:Default:uploadImage }

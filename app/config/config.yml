@@ -75,3 +75,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
 #    spool:     { type: memory }
+
+ivory_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            filebrowserUploadRoute: "my_shop_admin.upload_image"

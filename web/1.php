@@ -1,10 +1,63 @@
 <?php
 
-$password = "my_password";
 
-$res = md5($password);
+interface IMyStorage
+{
+    public function persist($object);
+    public function flush();
+}
 
-echo $res;
+interface IMyValidator
+{
+    public function validate($object);
+}
+
+
+class ProductManager
+{
+    /**
+     * @var IMyStorage
+    */
+    private $entityManager;
+
+    /**
+     * @var IMyValidator
+    */
+    private $validator;
+
+    public function __construct(IMyStorage $em, IMyValidator $validator)
+    {
+        $this->entityManager = $em;
+        $this->validator = $validator;
+    }
+
+    public function save(Product $product)
+    {
+        if ($this->validator->validate($product) == 0) {
+            return false;
+        }
+
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -30,47 +83,39 @@ echo $res;
 
 die();
 
-$data = array(
-    'A' => array(
-        'B' => array( 'X', 'D', 'Y'),
-        'C' => array( 'Z' ),
-        'G' => array(
-            'H' => array( 'J', 'K', 'L'),
-            'I' => array( 'M' )
-        )
-    )
-);
 
-
-function tree($data, $level = 0)
-{
-    if (!is_array($data))
-        return '';
-
-    $res = '';
-    foreach ($data as $key => $value)
+class A {
+    private $var;
+    public function __construct($v)
     {
-        // выводим рутовый эллемент (ключ рутового эллемента)
-        $res .= '<br/>' . str_repeat("-", $level * 5) . $key;
-
-        // если есть дети то заходим в функцию еще раз
-        if(is_array($value)) {
-            $res .= tree($value,$level+1);
-        }
-
-        // если детей нет, то выводим значение рутового эллемента
-        if(is_string($value)) {
-            $res .= '<br/>' . str_repeat("-", ($level + 1) * 5) . $value;
-        }
+        $this->var = $v;
     }
 
-    return $res;
+    public function getVar() { return $this->var; }
 }
-//echo tree($data, 0);
 
-function foo($item)
+$a = [
+    new A(2),
+    new A(5),
+    new A(1)
+];
+
+///////////////////////
+
+$b = $a;
+
+for ($i = 0; $i < count($b); $i++)
 {
-    var_dump($item);
+    for ($j = 0; $j < count($b); $j++)
+    {
+        if ($b[$i]->getVar() < $b[$j]->getVar())
+        {
+            $temp = $b[$i];
+            $b[$i] = $b[$j];
+            $b[$j] = $temp;
+        }
+    }
 }
 
-var_dump($data);
+echo '<pre>';
+print_r($b);

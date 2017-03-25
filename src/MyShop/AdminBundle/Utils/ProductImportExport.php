@@ -4,7 +4,9 @@ namespace MyShop\AdminBundle\Utils;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use MyShop\AdminBundle\Event\ProductAddEvent;
 use MyShop\DefaultBundle\Entity\Product;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ProductImportExport
 {
@@ -15,9 +17,12 @@ class ProductImportExport
 
     private $logger;
 
-    public function __construct(EntityManagerInterface $manager)
+    private $eventDispatcher;
+
+    public function __construct(EntityManagerInterface $manager, EventDispatcherInterface $eventDispatcher)
     {
         $this->manager = $manager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function exportProducts()
@@ -68,6 +73,9 @@ class ProductImportExport
 
                     $this->manager->persist($product);
                     $this->manager->flush();
+
+                    $event = new ProductAddEvent($product);
+                    $this->eventDispatcher->dispatch("product_add_event", $event);
                 }
             }
 
