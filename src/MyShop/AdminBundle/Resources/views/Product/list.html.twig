@@ -3,6 +3,10 @@
 {% block body %}
 <a href="{{ path("my_shop_admin.product_add") }}">Добавить товар</a>
 
+    {{ knp_pagination_render(productList) }}
+
+    <a href="{{ path('my_shop_admin.product_list', {'countPerPage':30}) }}">30</a>
+
 <table border="1">
     <tr>
         <td>Модель</td>
@@ -22,4 +26,6 @@
     </tr>
 {% endfor %}
 </table>
+
+    {{ knp_pagination_render(productList) }}
 {% endblock %}

@@ -11,8 +11,11 @@ my_shop_admin.product_add:
     defaults: { _controller: MyShopAdminBundle:Product:add }
 
 my_shop_admin.product_list:
-    path:   /product/list
-    defaults: { _controller: MyShopAdminBundle:Product:list }
+    path:   /product/list/{page}-{countPerPage}
+    defaults: { _controller: MyShopAdminBundle:Product:list, page: 1, countPerPage: 5 }
+    requirements:
+        page: \d+
+        countPerPage: \d+
 
 my_shop_admin.product_list_by_category:
     path:   /category/{id_category}/product/list
@@ -101,3 +104,7 @@ my_shop_admin.page_edit:
 my_shop_admin.upload_image:
     path:   /upload_image
     defaults: { _controller: MyShopAdminBundle:Default:uploadImage }
+
+my_shop_admin.test_api:
+    path: /testapi
+    defaults: { _controller: MyShopAdminBundle:TestApi:index }

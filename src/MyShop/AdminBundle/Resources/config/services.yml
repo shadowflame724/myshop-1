@@ -1,4 +1,31 @@
 services:
+    myshop_admin.my_doctrine_subscriber:
+        class: MyShop\AdminBundle\Event\MyDoctrineSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    myshop_admin.product_storage:
+        class: MyShop\AdminBundle\Storage\ProductStorage
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@knp_paginator"
+
+    myshop_admin.request_listener:
+        class: MyShop\AdminBundle\Event\MyRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    myshop_admin.response_listener:
+        class: MyShop\AdminBundle\Event\MyResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    myshop_admin.my_exception_listener:
+        class: MyShop\AdminBundle\Event\MyExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
     myshop_admin.product_subscriber:
         class: MyShop\AdminBundle\Event\ProductSubscriber
         tags:

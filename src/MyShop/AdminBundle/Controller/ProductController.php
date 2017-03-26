@@ -59,16 +59,16 @@ class ProductController extends Controller
     /**
      * @Template()
     */
-    public function listAction()
+    public function listAction($page = 1, $countPerPage = 5)
     {
-        $productList = $this->getDoctrine()
-            ->getManager()
-            ->createQuery("select p, c from MyShopDefaultBundle:Product p join p.category c")
-            ->getResult();
+        $productList = $this->get("myshop_admin.product_storage")->getProductListPagination($page, $countPerPage);
 
-        //$this->get("session")->set("history", $this->get("session")->get("history") . "<br />product list");
+        //$productList->setUsedRoute('my_shop_admin.product_list', ['countPerPage' => $countPerPage]);
 
-        return ["productList" => $productList];
+        return [
+            "productList" => $productList,
+            'countPerPage' => $countPerPage
+        ];
     }
 
     /**
