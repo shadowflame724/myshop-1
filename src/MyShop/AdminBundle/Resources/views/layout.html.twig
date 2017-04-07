@@ -1,6 +1,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% block head_js %}{% endblock %}
 </head>
 <body>
@@ -10,6 +12,7 @@
     </tr>
     <tr>
         <td valign="top" style="width: 250px">
+            {% block main_menu %}
             <ul>
                 <li><a href="{{ path("my_shop_admin.index") }}">Главная</a></li>
                 <li><a href="{{ path("my_shop_admin.user_add") }}">Добавить пользователя</a></li>
@@ -19,6 +22,7 @@
                 <li><a href="{{ path("my_shop_admin.category_tree") }}">Категории в виде дерева</a></li>
                 <li><a href="{{ path('my_shop_admin.load_demo_users') }}">Загрузить демо пользователей</a> </li>
             </ul>
+            {% endblock %}
         </td>
         <td valign="top">
             {% for flash_message in app.session.flashBag.get('error') %}

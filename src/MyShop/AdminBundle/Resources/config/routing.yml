@@ -29,6 +29,14 @@ my_shop.admin.product_delete:
     requirements:
         id: \d+
 
+my_shop.admin.product_delete_ajax:
+    path:   /product/{id}/deleteAjax
+    defaults: { _controller: MyShopAdminBundle:Product:deleteAjax }
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
 my_shop_admin.product_edit:
     path:   /product/{id}/edit
     defaults: { _controller: MyShopAdminBundle:Product:edit }
@@ -108,3 +116,7 @@ my_shop_admin.upload_image:
 my_shop_admin.test_api:
     path: /testapi
     defaults: { _controller: MyShopAdminBundle:TestApi:index }
+
+my_shop_admin.test:
+    path:   /test
+    defaults: { _controller: MyShopAdminBundle:Default:test }

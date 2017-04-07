@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -25,6 +26,16 @@ class ProductController extends Controller
 //    {
 //        $this->manager = $this->getDoctrine()->getManager();
 //    }
+
+    public function deleteAjaxAction($id)
+    {
+        $this->deleteAction($id);
+
+        // return $this->json(["message" => "Product deleted!"]);
+
+        $responseJson = new JsonResponse(["message" => "Product deleted!"]);
+        return $responseJson;
+    }
 
     public function deleteAction($id)
     {
@@ -59,15 +70,34 @@ class ProductController extends Controller
     /**
      * @Template()
     */
-    public function listAction($page = 1, $countPerPage = 5)
+    public function listAction(Request $request, $page = 1, $countPerPage = 5)
     {
+        // название текущего роута
+        // $request->get("_route");
+
         $productList = $this->get("myshop_admin.product_storage")->getProductListPagination($page, $countPerPage);
 
         //$productList->setUsedRoute('my_shop_admin.product_list', ['countPerPage' => $countPerPage]);
 
+        $data = [
+            [
+                "id" => 1,
+                "status" => true
+            ],
+            [
+                "id" => 2,
+                "status" => true
+            ],
+            [
+                "id" => 3,
+                "status" => false
+            ]
+        ];
+
         return [
             "productList" => $productList,
-            'countPerPage' => $countPerPage
+            'countPerPage' => $countPerPage,
+            'data' => []
         ];
     }
 

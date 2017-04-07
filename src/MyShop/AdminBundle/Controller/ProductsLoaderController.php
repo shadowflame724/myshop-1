@@ -15,10 +15,11 @@ class ProductsLoaderController extends Controller
     {
         $csvData = $this->get("myshop_admin.product_import_export")->exportProducts();
 
+//        $file = '....';
+//        return $this->file($file);
+
         $response = new Response($csvData);
-
         $response->headers->set("Content-disposition", "attachment;filename=products_".date("d.m.Y_H:i:s").".csv");
-
         return $response;
     }
 

@@ -5,16 +5,38 @@ namespace MyShop\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends BaseController
 {
+
+    public function testAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest())
+        {
+            $response = new JsonResponse([
+                "name" => "Igor",
+                "time" => time()
+            ]);
+
+            return $response;
+        }
+
+        return new Response("You are not ajax!");
+    }
+
     /**
      * @Template()
      */
     public function indexAction()
     {
+        $res = $this->get('translator')->trans('hi');
+
+//        var_dump($res);
+//        die();
+
         return [];
     }
 

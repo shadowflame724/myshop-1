@@ -36,4 +36,29 @@ class CheckImg extends BaseCheck
 
         return true;
     }
+
+    public function checkFile($filePath)
+    {
+        $this->checkMimeType($filePath);
+
+        $fileInfo = pathinfo($filePath);
+        $fileExt = $fileInfo["extension"];
+
+        $checkTrue = false;
+        foreach ($this->supportImageTypeList as $imgType) {
+            if ($fileExt == $imgType[0]) {
+                $checkTrue = true;
+            }
+        }
+
+        if ($checkTrue == false) {
+            throw new \InvalidArgumentException("Extension is blocked!");
+        }
+
+        return true;
+    }
 }
+
+/*
+ *
+ */

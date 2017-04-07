@@ -1,7 +1,71 @@
 {% extends "@MyShopAdmin/layout.html.twig" %}
 
+{% block main_menu %}
+    <div style="width: 200px; height: 150px; border: 1px solid gray">
+        Логотип!
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{% block head_js %}
+    <script type="application/javascript" src="{{ asset('bundles/myshopadmin/jquery-3.2.0.min.js') }}"></script>
+    <script type="application/javascript">
+        function del(idProduct)
+        {
+            var url = Routing.generate('my_shop.admin.product_delete_ajax', {"id":idProduct});
+
+            $.get(url, function(data) {
+                alert(data.message);
+            });
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
-<a href="{{ path("my_shop_admin.product_add") }}">Добавить товар</a>
+    {###
+    <style>
+        .item-111 {
+            border: 10px solid red;
+
+        }
+
+        .item-222 {
+            border: 10px solid black
+        }
+    </style>
+
+    {% for iter in 1..20 %}
+        <div class="item-{{ cycle(['111', '222'], iter) }}">
+            <a href="{{ path('my_shop_admin.index') }}">Some link</a>
+        </div><br />
+    {% endfor %}
+    ###}
+
+    {###
+    {% for item in data if item.status == true %}
+        {{ item.id }}<br />
+    {% else %}
+        No products!
+    {% endfor %}
+    ###}
+
+    <br />
+
+    <b>{{ app.request.get("_route") }}</b>
+
+    {###
+    {% if app.debug == true %}
+        {{ dump(productList) }}
+    {% endif %}
+
+    {{ count_per_page }}
+
+    {{ render(controller("MyShopAdminBundle:Page:add", {"show_only_body":true})) }}
+
+    ###}
+
+
+        <a href="{{ path("my_shop_admin.product_add") }}">Добавить товар</a>
 
     {{ knp_pagination_render(productList) }}
 
@@ -11,7 +75,7 @@
     <tr>
         <td>Модель</td>
         <td>Категория</td>
-        <td>Цена</td>
+        <td>{{ knp_pagination_sortable(productList, 'Цена', 'p.price') }}</td>
     </tr>
 {% for product in productList %}
     <tr>
@@ -19,6 +83,7 @@
         <td>{{ product.getCategory().getName() }}</td>
         <td>{{ product.getPrice() }}</td>
         <td>
+            <a href="#" onclick="del({{ product.id }})">Удалить ajax</a><br/>
             <a href="{{ path("my_shop.admin.product_delete", {id:product.id}) }}">Удалить</a><br/>
             <a href="{{ path("my_shop_admin.product_edit", {id:product.id}) }}">Редактирование</a><br>
             <a href="{{ path("my_shop_admin.product_photo_list", {idProduct:product.getId()}) }}">Управление картинками</a>

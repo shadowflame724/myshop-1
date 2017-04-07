@@ -53,6 +53,11 @@ class PageController extends Controller
             return $this->redirectToRoute("my_shop_admin.page_list");
         }
 
+//        $show_only_body = false;
+//        if ($request->get("show_only_body") == true) {
+//            $show_only_body = true;
+//        }
+
         return ['form' => $form->createView()];
     }
 

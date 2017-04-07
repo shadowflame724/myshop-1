@@ -1,5 +1,23 @@
 {% extends "@MyShopAdmin/layout.html.twig" %}
 
+{% block head_js %}
+    <script type="application/javascript" src="{{ asset('bundles/myshopadmin/jquery-3.2.0.min.js') }}"></script>
+    <script>
+        $(function() {
+
+            $.get("/admin/test", function(data) {
+                console.log(data);
+            });
+
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     Admin panel (CMS)
+    <h1>
+    {{ 'hi'|trans }}
+        <br />
+    {{ 'Hello %name%'|trans({'%name%':'Igor'}) }}
+    </h1>
 {% endblock %}
