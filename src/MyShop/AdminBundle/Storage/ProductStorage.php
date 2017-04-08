@@ -29,7 +29,6 @@ class ProductStorage
     {
         $dql = "select p, c from MyShopDefaultBundle:Product p join p.category c";
         $query = $this->manager->createQuery($dql);
-
         $result = $this->pag->paginate($query, $page, $countPerPage);
 
         return $result;
