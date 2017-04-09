@@ -1,0 +1,11 @@
+{% extends "@MyShopDefault/layout.html.twig" %}
+
+{% block body %}
+    <fieldset>
+        <legend>Оформление заказ </legend>
+
+        <form method="POST" action="{{ path('myshop.basket_release') }}">
+            <input type="submit" value="Подтвердить" />
+        </form>
+    </fieldset>
+{% endblock %}

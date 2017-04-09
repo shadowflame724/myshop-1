@@ -1,0 +1,38 @@
+{% extends "@MyShopDefault/layout.html.twig" %}
+
+{% block body %}
+    <fieldset>
+        <legend>История заказов</legend>
+        <table border="1">
+            <tr>
+                <td>Дата заказа</td>
+                <td>Товары</td>
+                <td>Общая стоимость</td>
+                <td>Статус</td>
+            </tr>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.dateCreatedAt.format('H:i:s d.m.Y') }}</td>
+                <td>
+                    <ul>
+                    {% for prod in order.productList %}
+                        {% set prodSum = prod.price * prod.count %}
+                        <li><b>{{ prod.model }}</b> {{ prod.description }} <b>{{ prod.price }}</b>x{{ prod.count }}={{ prodSum }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {% set sum = 0 %}
+                    {% for prod in order.productList %}
+                        {% set sum = sum + prod.price * prod.count %}
+                    {% endfor %}
+                    {{ sum|number_format(2, ',', ' ') }}
+                </td>
+                <td>
+                    {{ order.status }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </fieldset>
+{% endblock %}

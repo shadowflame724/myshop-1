@@ -3,7 +3,7 @@
 {% block body %}
     <fieldset>
         <legend>Регистрация</legend>
-        <form action="{{ path('login_customer') }}" method="post">
+        <form action="{{ path('new_customer') }}" method="post">
             {{ form_widget(form) }}
             <button type="submit">Зарегистрировать</button>
         </form>

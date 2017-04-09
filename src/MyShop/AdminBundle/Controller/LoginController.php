@@ -12,6 +12,13 @@ class LoginController extends Controller
     */
     public function loginAction()
     {
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if (!is_null($error)) {
+            var_dump($error);
+            die();
+        }
+
         return [];
 //        $authenticationUtils = $this->get('security.authentication_utils');
 //        $error = $authenticationUtils->getLastAuthenticationError();

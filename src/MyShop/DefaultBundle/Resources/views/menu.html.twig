@@ -1,0 +1,15 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MyShop</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ path("myshop.main_page") }}">Главная</a></li>
+                <li><a href="{{ path("myshop.product_list") }}">Каталог товаров</a></li>
+                <li><a href="{{ path('myshop.page', {'pageKey':'about'}) }}">О компании</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

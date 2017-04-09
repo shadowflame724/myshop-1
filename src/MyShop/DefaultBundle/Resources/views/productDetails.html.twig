@@ -2,3 +2,6 @@
 <b>{{ product.getModel() }}</b> {{ product.getPrice() }}<br />
 {{ product.getDescription() }}<br />
 date: {{ product.getDateCreatedAt().format("d.m.Y H:i:s") }}
+{% if is_granted("ROLE_CUSTOMER") %}
+    <a href="{{ path('myshop.add_product_to_basket', {idProduct:product.id}) }}">Добавить в корзину</a>
+{% endif %}

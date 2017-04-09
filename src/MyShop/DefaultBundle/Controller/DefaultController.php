@@ -3,6 +3,7 @@
 namespace MyShop\DefaultBundle\Controller;
 
 use GuzzleHttp\Client;
+use MyShop\AdminBundle\Entity\User;
 use MyShop\DefaultBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,9 +16,18 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+//        $user = new User();
+//        $user->setEmail("igorstokolos@gmnail.com")
+//            ->setUsername("admin");
+//
+//        $pas = $this->get('security.password_encoder')->encodePassword($user, "123");
+//        $user->setPassword($pas);
+//        $manager = $this->getDoctrine()->getManager();
+//        $manager->persist($user);
+//        $manager->flush();
+//        die();
+        
         $products = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->findAll();
-
-
         return $this->render("@MyShopDefault/Default/index.html.twig", [
             'productList' => $products
         ]);

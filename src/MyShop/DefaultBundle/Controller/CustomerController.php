@@ -17,6 +17,25 @@ class CustomerController extends Controller
     */
     public function loginAction()
     {
+//        $customer = new Customer();
+//        $customer->setEmail("igorstokolos@gmail.com")
+//            ->setIsActive(true)
+//            ->setFio("igor");
+//        $pas = $this->get("security.password_encoder")->encodePassword($customer, "1234");
+//        $customer->setPassword($pas);
+//        $manager = $this->getDoctrine()->getManager();
+//        $manager->persist($customer);
+//        $manager->flush();
+//        echo $customer->getId();
+//        die();
+
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if (!is_null($error)) {
+            var_dump($error);
+            die();
+        }
+
         return [];
     }
 
@@ -27,9 +46,9 @@ class CustomerController extends Controller
     {
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
-
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
+
+        if ($form->isSubmitted())
         {
             $passwordHashed = $this->get('security.password_encoder')->encodePassword($customer, $customer->getPlainPassword());
             $customer->setPassword($passwordHashed);
@@ -38,10 +57,12 @@ class CustomerController extends Controller
             $manager->persist($customer);
             $manager->flush();
 
-            $this->addFlash("success", "Спасибо за регистрацию! На ваш емеил (".$customer->getEmail().") было отправленно письмо для подтверждения регистрации.");
+            $this->addFlash("success", "Спасибо за регистрацию!");
             return $this->redirectToRoute("myshop.main_page");
         }
 
-        return [];
+        return [
+            'form' => $form->createView()
+        ];
     }
 }

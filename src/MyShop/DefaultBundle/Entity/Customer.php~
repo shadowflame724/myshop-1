@@ -255,39 +255,4 @@ class Customer implements UserInterface, \Serializable
     {
         return $this->isActive;
     }
-
-    /**
-     * Add order
-     *
-     * @param \MyShop\DefaultBundle\Entity\CustomerOrder $order
-     *
-     * @return Customer
-     */
-    public function addOrder(\MyShop\DefaultBundle\Entity\CustomerOrder $order)
-    {
-        $order->setCustomer($this);
-        $this->orders[] = $order;
-
-        return $this;
-    }
-
-    /**
-     * Remove order
-     *
-     * @param \MyShop\DefaultBundle\Entity\CustomerOrder $order
-     */
-    public function removeOrder(\MyShop\DefaultBundle\Entity\CustomerOrder $order)
-    {
-        $this->orders->removeElement($order);
-    }
-
-    /**
-     * Get orders
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrders()
-    {
-        return $this->orders;
-    }
 }

@@ -1,17 +1,31 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
+
+{{ include("@MyShopDefault/menu.html.twig") }}
     <table border="1" style="width: 100%">
         <tr>
             <td valign="top" style="width: 400px">
                 <ul>
                     <li><a href="{{ path("myshop.main_page") }}">Main page</a></li>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li><a href="{{ path('customer_logout') }}">Выход</a></li>
+                    {% else %}
+                        <li><a href="{{ path('login_customer') }}">Вход</a></li>
+                        <li><a href="{{ path('new_customer') }}">Регистрация</a></li>
+                    {% endif %}
                     <li><a href="{{ path("myshop.product_info", {id:1}) }}">Product details</a></li>
                     <li><a href="{{ path("myshop.product_list") }}">Product list</a></li>
                     <li><a href="{{ path('myshop.page', {'pageKey':'about'}) }}">О компании</a></li>
                 </ul>
+                {% if is_granted('ROLE_CUSTOMER') %}
+                    {{ render(controller('MyShopDefaultBundle:Basket:index')) }}
+                {% endif %}
             </td>
             <td valign="top">
                 {% for flash_message in app.session.flashBag.get('success') %}

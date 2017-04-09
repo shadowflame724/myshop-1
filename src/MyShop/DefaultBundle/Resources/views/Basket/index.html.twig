@@ -1,5 +1,17 @@
-{% extends "@MyShopDefault/layout.html.twig" %}
-
-{% block body %}
-    basket!!!
-{% endblock %}
+<b>
+    <div>
+        <b>Корзина товаров</b><br>
+        {% if productList %}
+            <ul>
+        {% for product in productList %}
+            <li>{{ product.getModel() }} - {{ product.getPrice() }} x {{ product.getCount() }}</li>
+        {% endfor %}
+            </ul>
+            <a href="{{ path('myshop.basket_release') }}">Оформить</a><br>
+            {% if productList|length > 0 %}
+                <a href="{{ path('myshop.basket_reject') }}">анулировать</a><br>
+            {% endif %}
+            <a href="{{ path('myshop.basket_history') }}">история заказов</a>
+        {% endif %}
+    </div>
+</b>

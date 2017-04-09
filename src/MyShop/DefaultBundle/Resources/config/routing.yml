@@ -46,10 +46,34 @@ login_customer:
     path: /customer/login
     defaults: { _controller: MyShopDefaultBundle:Customer:login }
 
+customer_logout:
+    path: /customer/logout
+
+new_customer:
+    path: /customer/registration
+    defaults: { _controller: MyShopDefaultBundle:Customer:new }
+
 myshop.basket:
     path: /basket
     defaults: { _controller: MyShopDefaultBundle:Basket:index }
 
+myshop.basket_history:
+    path: /basket/history
+    defaults: { _controller: MyShopDefaultBundle:Basket:history }
+
+myshop.basket_release:
+    path: /basket/confirm
+    defaults: { _controller: MyShopDefaultBundle:Basket:releaseOrder }
+
+myshop.basket_reject:
+    path: /basket/reject
+    defaults: { _controller: MyShopDefaultBundle:Basket:rejectOrder }
+
+myshop.add_product_to_basket:
+    path:   /basket/product/{idProduct}/buy
+    defaults: { _controller: MyShopDefaultBundle:Basket:addProductToBasket }
+    requirements:
+        idProduct: \d+
 
 myshop.curl_client_json_rpc:
     path:   /client/jsonrpc/{idProduct}
