@@ -2,20 +2,21 @@
 # http://symfony.com/doc/current/security.html
 security:
 
+    encoders:
+        MyShop\AdminBundle\Entity\User: plaintext
+        MyShop\DefaultBundle\Entity\Customer: bcrypt
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        db_customer_provider:
-            entity:
-                class: MyShopDefaultBundle:Customer
-                property: email
         db_provider:
             entity:
-                class: MyShopAdminBundle:User
+                class: MyShop\AdminBundle\Entity\User
                 property: username
 
-    encoders:
-        MyShop\AdminBundle\Entity\User: bcrypt
-        MyShop\DefaultBundle\Entity\Customer: bcrypt
+        customer_db_provider:
+            entity:
+                class: MyShop\DefaultBundle\Entity\Customer
+                property: email
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -23,17 +24,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        shop:
-            provider: db_customer_provider
-            anonymous: ~
-            form_login:
-                login_path: login_customer
-                check_path: login_customer
-            logout:
-                path:   /exit
-                target: /
-
         main:
+            pattern: /admin/*
             provider: db_provider
             anonymous: ~
             form_login:
@@ -42,6 +34,17 @@ security:
             logout:
                 path:   /logout
                 target: /
+
+        shop:
+            provider: customer_db_provider
+            anonymous: ~
+            form_login:
+                login_path: login_customer
+                check_path: login_customer
+            logout:
+                path:   logout_customer
+                target: /
+
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -51,6 +54,7 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin123, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/customer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/basket, roles: ROLE_CUSTOMER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

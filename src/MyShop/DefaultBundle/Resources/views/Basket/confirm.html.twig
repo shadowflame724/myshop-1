@@ -1,0 +1,19 @@
+{% extends "@MyShopAdmin/layout.html.twig" %}
+
+{% block body %}
+    <div>
+        <b>Корзина товаров</b><br />
+
+        <ul>
+        {% for product in order.products %}
+            {% set sum = product.price * product.count %}
+            <li>{{ product.model }} - {{ product.price }} x {{ product.count }} = {{ sum }}</li>
+        {% endfor %}
+        </ul>
+
+        <form method="POST" action="{{ path('myshop.order_confirm') }}">
+            {{ form_widget(form) }}
+            <input type="submit" value="Подтвердить заказ" />
+        </form>
+    </div>
+{% endblock %}

@@ -236,7 +236,6 @@ class Customer implements UserInterface, \Serializable
      */
     public function addOrder(\MyShop\DefaultBundle\Entity\CustomerOrder $order)
     {
-        $order->setCustomer($this);
         $this->orders[] = $order;
 
         return $this;
@@ -260,10 +259,5 @@ class Customer implements UserInterface, \Serializable
     public function getOrders()
     {
         return $this->orders;
-    }
-
-    public function __toString()
-    {
-        return $this->email;
     }
 }

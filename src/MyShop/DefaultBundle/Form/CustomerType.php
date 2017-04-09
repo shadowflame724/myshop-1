@@ -17,10 +17,10 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email'. EmailType::class, [
+            ->add('email', EmailType::class, [
                 'label' => 'Email'
             ])
-            ->add('password_plain', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Пароль'],
                 'second_options' => ['label' => 'Повторить пароль'],

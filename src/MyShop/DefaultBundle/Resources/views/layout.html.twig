@@ -12,6 +12,20 @@
                     <li><a href="{{ path("myshop.product_list") }}">Product list</a></li>
                     <li><a href="{{ path('myshop.page', {'pageKey':'about'}) }}">О компании</a></li>
                 </ul>
+
+                {% if is_granted('ROLE_CUSTOMER') %}
+                    {{ render(controller('MyShopDefaultBundle:Basket:index')) }}
+                {% endif %}
+
+                <br />
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a href="{{ path('logout_customer') }}">Выход</a>
+                {% else %}
+                <ul>
+                    <li><a href="{{ path('login_customer') }}">Вход</a></li>
+                    <li><a href="{{ path('myshop.customer_registration') }}">Регистрация</a></li>
+                </ul>
+                {% endif %}
             </td>
             <td valign="top">
                 {% for flash_message in app.session.flashBag.get('success') %}

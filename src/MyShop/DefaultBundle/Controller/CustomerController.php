@@ -23,13 +23,14 @@ class CustomerController extends Controller
     /**
      * @Template()
      */
-    public function newAction(Request $request)
+    public function registrationAction(Request $request)
     {
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
 
+
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
+        if ($request->isMethod("POST"))
         {
             $passwordHashed = $this->get('security.password_encoder')->encodePassword($customer, $customer->getPlainPassword());
             $customer->setPassword($passwordHashed);
@@ -38,10 +39,11 @@ class CustomerController extends Controller
             $manager->persist($customer);
             $manager->flush();
 
-            $this->addFlash("success", "Спасибо за регистрацию! На ваш емеил (".$customer->getEmail().") было отправленно письмо для подтверждения регистрации.");
+            $this->addFlash("success", "Спасибо за регистрацию!");
             return $this->redirectToRoute("myshop.main_page");
         }
-
-        return [];
+        return [
+            'form' => $form->createView()
+        ];
     }
 }
