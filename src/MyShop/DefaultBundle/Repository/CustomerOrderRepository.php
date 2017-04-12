@@ -23,6 +23,18 @@ class CustomerOrderRepository extends \Doctrine\ORM\EntityRepository
             'status' => CustomerOrder::STATUS_OPEN
         ])->getOneOrNullResult();
 
+//        /** @var \DateTime $dateCreatedOrder */
+//        $dateCreatedOrder = $order->getDateCreatedAt();
+//
+//        /** @var \DateInterval $res */
+//        $res = $dateCreatedOrder->diff(new \DateTime("now"));
+//        if ($res->h > 24) {
+//            $order->setStatus(CustomerOrder::STATUS_REJECT);
+//            $manager->persist($order);
+//            $manager->flush();
+//            $order = null;
+//        }
+
         if ($order == null)
         {
             $order = new CustomerOrder();
@@ -30,6 +42,8 @@ class CustomerOrderRepository extends \Doctrine\ORM\EntityRepository
             $manager->persist($customer);
             $manager->flush();
         }
+
+
 
         return $order;
     }

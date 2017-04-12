@@ -16,8 +16,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $products = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->findAll();
-
-
         return $this->render("@MyShopDefault/Default/index.html.twig", [
             'productList' => $products
         ]);

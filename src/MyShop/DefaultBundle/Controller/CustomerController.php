@@ -15,8 +15,14 @@ class CustomerController extends Controller
     /**
      * @Template()
     */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
+        if ($request->isMethod("POST"))
+        {
+            echo 'POST!!!!';
+            die();
+        }
+
         return [];
     }
 
@@ -33,6 +39,7 @@ class CustomerController extends Controller
         if ($request->isMethod("POST"))
         {
             $passwordHashed = $this->get('security.password_encoder')->encodePassword($customer, $customer->getPlainPassword());
+            $customer->setPlainPassword("");
             $customer->setPassword($passwordHashed);
 
             $manager = $this->getDoctrine()->getManager();

@@ -124,7 +124,7 @@ class Customer implements UserInterface, \Serializable
         $data = serialize([
             $this->getId(),
             $this->getUsername(),
-            $this->getPassword()
+//            $this->getPassword()
         ]);
 
         return $data;
@@ -132,7 +132,7 @@ class Customer implements UserInterface, \Serializable
 
     public function unserialize($serialized)
     {
-        list($this->id, $this->email, $this->password) = unserialize($serialized);
+        list($this->id, $this->email) = unserialize($serialized);
     }
 
     public function getRoles()
