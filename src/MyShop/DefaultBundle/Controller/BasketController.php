@@ -7,6 +7,7 @@ use MyShop\DefaultBundle\Entity\CustomerOrder;
 use MyShop\DefaultBundle\Entity\OrderProduct;
 use MyShop\DefaultBundle\Entity\Product;
 use MyShop\DefaultBundle\Form\CustomerOrderType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,88 @@ class BasketController extends Controller
         $order = $manager->getRepository('MyShopDefaultBundle:CustomerOrder')->getOrCreateOrder($customer);
 
         return ['order' => $order];
+    }
+
+    public function recalculationCurrentOrderAction(Request $request)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $customer = $this->getUser();
+        $order = $manager->getRepository('MyShopDefaultBundle:CustomerOrder')->getOrCreateOrder($customer);
+
+        $products = $order->getProducts();
+        /** @var OrderProduct $product */
+        foreach ($products as $product)
+        {
+            $key = "prod_" . $product->getId();
+            $productCount = $request->get($key);
+            $productCount = intval($productCount);
+
+            if ($productCount < 0) {
+                $product->setCount(1);
+            }
+            elseif ($productCount == 0) {
+                $this->orderRemoveProductAction($product);
+            }
+            else {
+                $product->setCount($productCount);
+            }
+        }
+
+        $manager->persist($order);
+        $manager->flush();
+        
+        return $this->redirectToRoute("myshop.main_page");
+    }
+
+    /**
+     * @Template()
+     * //@Security("has_role('ROLE_CUSTOMER')")
+     */
+    public function historyOrderAction()
+    {
+        $customer = $this->getUser();
+        $orders = $this->getDoctrine()->getRepository("MyShopDefaultBundle:CustomerOrder")->findBy(["customer" => $customer]);
+        return ['orders' => $orders];
+    }
+
+
+//    /**
+//     * @Template()
+//     */
+//    public function orderProductsAction($id)
+//    {
+//        $order = $this->getDoctrine()->getRepository("MyShopDefaultBundle:CustomerOrder")->find($id);
+//        if ($order == null) {
+//            throw $this->createNotFoundException();
+//        }
+//        return ['order' => $order];
+//    }
+
+    /**
+     * @Template()
+    */
+    public function orderProductsAction(CustomerOrder $order)
+    {
+        $products = $order->getProducts();
+
+        foreach ($products as $prod)
+        {
+            $productShop = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->find($prod->getIdProduct());
+            if ($productShop == null) {
+                $prod->setIdProduct(null);
+            }
+        }
+
+        return ['order' => $order];
+    }
+
+    public function orderRemoveProductAction(OrderProduct $orderProduct)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($orderProduct);
+        $manager->flush();
+
+        return $this->redirectToRoute("myshop.main_page");
     }
 
     /**

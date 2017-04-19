@@ -57,4 +57,5 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/customer/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/basket, roles: ROLE_CUSTOMER }
+        - { path: ^/orders, roles: ROLE_CUSTOMER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

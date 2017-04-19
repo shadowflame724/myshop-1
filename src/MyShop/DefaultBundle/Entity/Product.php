@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Product implements \JsonSerializable
 {
+    const STATUS_AV = 1;
+    const STATUS_NONE = 2;
+
     /**
      * @var int
      *
@@ -22,6 +25,12 @@ class Product implements \JsonSerializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var int
+     * @ORM\Column(type="string", length=200)
+    */
+    private $status;
 
     /**
      * @var string
@@ -105,7 +114,27 @@ class Product implements \JsonSerializable
         $this->photos = new ArrayCollection();
 
         $this->setIsShowOnMainPage(false);
+
+        $this->status = self::STATUS_AV;
     }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+
 
     public function jsonSerialize()
     {

@@ -1,0 +1,37 @@
+{% extends "@MyShopDefault/layout.html.twig" %}
+
+{% block body %}
+    <div>
+        <b>Товары в заказе</b><br />
+
+        <fieldset>
+            <legend>{{ order.dateCreatedAt.format('H:i d.m.Y') }} - {{ order.phoneNumber }}</legend>
+
+            <table border="1">
+                {% for product in order.products %}
+                    <tr>
+                        <td>
+                            {% if product.idProduct is not null %}
+                            <a href="{{ path('myshop.product_info', {id:product.idProduct}) }}">
+                            {{ product.model }}
+                            </a>
+                            {% else %}
+                                {{ product.model }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ product.price }}
+                        </td>
+                        <td>
+                            {{ product.count }}
+                        </td>
+                        <td>
+                            {{ product.getTotalPrice() }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+
+    </div>
+{% endblock %}

@@ -67,6 +67,26 @@ myshop.add_product_to_basket:
     requirements:
         idProduct: \d+
 
+myshop.orders_history:
+    path: /orders/history
+    defaults: { _controller: MyShopDefaultBundle:Basket:historyOrder }
+
+myshop.order_products:
+    path: /orders/{id}/history
+    defaults: { _controller: MyShopDefaultBundle:Basket:orderProducts }
+    requirements:
+        id: \d+
+
+myshop.basket_remove_product:
+    path: /basket/product/{id}/remove
+    defaults: { _controller: MyShopDefaultBundle:Basket:orderRemoveProduct }
+    requirements:
+        id: \d+
+
+myshop.basket_recalculation:
+    path: /basket/recalculation
+    defaults: { _controller: MyShopDefaultBundle:Basket:recalculationCurrentOrder }
+    methods: [POST]
 
 myshop.curl_client_json_rpc:
     path:   /client/jsonrpc/{idProduct}

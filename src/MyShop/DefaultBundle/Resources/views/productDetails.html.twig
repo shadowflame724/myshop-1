@@ -2,4 +2,9 @@
 <b>{{ product.getModel() }}</b> {{ product.getPrice() }}<br />
 {{ product.getDescription() }}<br />
 date: {{ product.getDateCreatedAt().format("d.m.Y H:i:s") }}
+
+{% if product.status == constant("\\MyShop\\DefaultBundle\\Entity\\Product::STATUS_AV") %}
 <a href="{{ path('myshop.add_product_to_basket', {idProduct:product.id}) }}">Добавить в корзину</a>
+{% else %}
+    ожидается поставка
+{% endif %}

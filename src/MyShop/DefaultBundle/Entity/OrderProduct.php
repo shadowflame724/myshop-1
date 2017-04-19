@@ -68,6 +68,11 @@ class OrderProduct
         return $this->id;
     }
 
+    public function getTotalPrice()
+    {
+        return $this->price * $this->count;
+    }
+
     /**
      * Set idProduct
      *

@@ -2,13 +2,21 @@
     <b>Корзина товаров</b><br />
 
     {% if order.products|length > 0 %}
+<form method="post" action="{{ path('myshop.basket_recalculation') }}">
         <ul>
     {% for product in order.products %}
         {% set sum = product.price * product.count %}
-        <li><b>{{ product.model }}</b> {{ product.price }}x{{ product.count }}={{ sum }}</li>
+        <li><a href="{{ path('myshop.basket_remove_product', {id:product.id}) }}">[X]</a><b>{{ product.model }}</b> {{ product.price }}x
+            <input name="prod_{{ product.id }}" style="width: 20px" type="text" value="{{ product.count }}" />
+            ={{ sum }}</li>
     {% endfor %}
         </ul>
-
+    <br>
+    <input type="submit" value="Пересчитать" />
+</form>
         <a href="{{ path('myshop.order_confirm') }}">Оформить заказ</a>
     {% endif %}
+
+    <br>
+    <a href="{{ path('myshop.orders_history') }}">История заказов</a>
 </div>

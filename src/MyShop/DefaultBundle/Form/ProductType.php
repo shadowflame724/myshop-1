@@ -7,6 +7,7 @@ use MyShop\DefaultBundle\Form\Type\EntityTreeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -24,6 +25,12 @@ class ProductType extends AbstractType
         $builder
             ->add('model', TextType::class, [
                 'label' => 'Модель товара'
+            ])
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Доступен' => '1',
+                    'Нет' => '2'
+                ]
             ])
             ->add('price', NumberType::class, [
                 "label" => 'Цена товара'

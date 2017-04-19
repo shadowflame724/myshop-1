@@ -70,6 +70,17 @@ class CustomerOrder
         $this->products = new ArrayCollection();
     }
 
+    public function getTotalPrice()
+    {
+        $total = 0;
+        /** @var OrderProduct $product */
+        foreach ($this->products as $product) {
+            $total = $total + ( $product->getPrice() * $product->getCount());
+        }
+
+        return $total;
+    }
+
     /**
      * @return string
      */
