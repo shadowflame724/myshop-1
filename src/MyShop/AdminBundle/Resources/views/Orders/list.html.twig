@@ -1,0 +1,44 @@
+{% extends "@MyShopAdmin/layout.html.twig" %}
+
+{% block body %}
+    <div>
+        {{ knp_pagination_render(orders) }}
+    </div>
+    <table border="1" cellpadding="5" cellspacing="5">
+        <tr>
+            <td>{{ knp_pagination_sortable(orders, 'Дата создания', 'o.dateCreatedAt') }}</td>
+            <td>Клиент</td>
+            <td>{{ knp_pagination_sortable(orders, 'Статус', 'o.status') }}</td>
+            <td>Сумма заказа</td>
+            <td></td>
+        </tr>
+    {% for order in orders %}
+        <tr>
+            <td>{{ order.dateCreatedAt.format("H:i d.m.Y") }}</td>
+            <td>{{ order.customer.email }}</td>
+            <td>
+                {% if order.status == 1 %}
+                    Открыт
+                {% elseif order.status == 2 %}
+                    Готов к обработке менеджером
+                {% elseif order.status == 3 %}
+                    Отклонен
+                {% elseif order.status == 4 %}
+                    Завершен
+                {% endif %}
+            </td>
+            <td>{{ order.getTotalPrice() }}</td>
+            <td>
+                <a href="{{ path('my_shop_admin.order_reject', {id:order.id}) }}">Отклонить заказ</a><br>
+                {% if order.status == 2 %}
+                <a href="{{ path('my_shop_admin.order_resolve', {id:order.id}) }}">Заказ обработан</a><br />
+                {% endif %}
+                <a href="{{ path('my_shop_admin.order_products', {id:order.id}) }}">Содержимое заказа</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div>
+        {{ knp_pagination_render(orders) }}
+    </div>
+{% endblock %}

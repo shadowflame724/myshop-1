@@ -16,6 +16,7 @@ class CustomerOrder
     const STATUS_OPEN = 1;
     const STATUS_DONE = 2;
     const STATUS_REJECT = 3;
+    const STATUS_RESOLVE = 4;
 
     /**
      * @var int

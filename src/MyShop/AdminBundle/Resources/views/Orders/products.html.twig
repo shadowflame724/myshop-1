@@ -1,0 +1,24 @@
+{% extends "@MyShopAdmin/layout.html.twig" %}
+
+{% block body %}
+    <table border="1" cellpadding="5" cellspacing="5">
+        <tr>
+            <td>Модель</td>
+            <td>Кол-во</td>
+            <td>Цена</td>
+            <td></td>
+        </tr>
+    {% for prod in order.products %}
+        <tr>
+            <td>{{ prod.model }}</td>
+            <td>{{ prod.price }}</td>
+            <td>{{ prod.count }}</td>
+            <td>{{ prod.getTotalPrice() }}</td>
+            <td>
+                <a href="{{ path('my_shop_admin.order_product_remove', {id:order.id, idProduct:prod.id}) }}">Удалить товар</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

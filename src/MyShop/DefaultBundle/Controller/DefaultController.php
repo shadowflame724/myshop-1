@@ -10,11 +10,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\User\User;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+
         $products = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->findAll();
         return $this->render("@MyShopDefault/Default/index.html.twig", [
             'productList' => $products

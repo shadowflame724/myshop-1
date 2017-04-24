@@ -120,3 +120,34 @@ my_shop_admin.test_api:
 my_shop_admin.test:
     path:   /test
     defaults: { _controller: MyShopAdminBundle:Default:test }
+
+my_shop_admin.orders_list:
+    path:   /orders/{page}
+    defaults: { _controller: MyShopAdminBundle:Orders:list, page:1 }
+    requirements:
+        page: \d+
+
+my_shop_admin.order_resolve:
+    path:   /order/{id}/resolve
+    defaults: { _controller: MyShopAdminBundle:Orders:resolve }
+    requirements:
+        id: \d+
+
+my_shop_admin.order_reject:
+    path:   /order/{id}/reject
+    defaults: { _controller: MyShopAdminBundle:Orders:reject }
+    requirements:
+        id: \d+
+
+my_shop_admin.order_products:
+    path:   /order/{id}/products
+    defaults: { _controller: MyShopAdminBundle:Orders:products }
+    requirements:
+        id: \d+
+
+my_shop_admin.order_product_remove:
+    path:   /order/{id}/product/{idProduct}/remove
+    defaults: { _controller: MyShopAdminBundle:Orders:productRemove }
+    requirements:
+        id: \d+
+        idProduct: \d+
