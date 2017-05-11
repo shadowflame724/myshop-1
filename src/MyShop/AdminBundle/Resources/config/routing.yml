@@ -151,3 +151,7 @@ my_shop_admin.order_product_remove:
     requirements:
         id: \d+
         idProduct: \d+
+
+my_shop_admin.page.create_without_twig:
+    path:   /page/custom_create
+    defaults: { _controller: MyShopAdminBundle:Page:createPageWithoutTwig }

@@ -1,0 +1,10 @@
+{% extends "@MyShopDefault/layout.html.twig" %}
+
+{% block body %}
+    <h2>Результаты поиска</h2>
+
+
+    {% for product in productList %}
+        {{ include("@MyShopDefault/productDetails.html.twig", {"product":product}) }}
+    {% endfor %}
+{% endblock %}

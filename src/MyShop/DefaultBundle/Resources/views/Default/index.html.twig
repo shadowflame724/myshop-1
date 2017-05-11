@@ -4,6 +4,13 @@
     <h2>E-Commerce solution</h2>
 
 
+    <form method="GET" action="{{ path('myshop.search') }}">
+        Поиск: <input name="searchKey" type="text" /><br/>
+        <input type="submit" value="Поиск" />
+    </form>
+    <br>
+
+
     {% for product in productList %}
         {###
         <div style="border: 1px solid red; width: 300px;">

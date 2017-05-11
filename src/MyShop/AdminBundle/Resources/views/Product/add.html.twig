@@ -1,8 +1,27 @@
 {% extends "@MyShopAdmin/layout.html.twig" %}
 
+{% form_theme form _self %}
+
 {% block body %}
 <form method="post" enctype="multipart/form-data" action="{{ path('my_shop_admin.product_add') }}">
-{{ form_widget(form) }}
+
+    {# {{ form_widget(form) }} #}
+
+    <div style="border: 1px solid red">
+        {{ form_row(form.model) }}
+    </div>
+
+    <table border="1">
+    {% for formItem in form %}
+        {% if formItem.vars.name != "model" %}
+        <tr>
+            <td>{{ form_label(formItem) }}</td>
+            <td>{{ form_widget(formItem) }}</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+
     <input type="submit" />
 </form>
 {% endblock %}

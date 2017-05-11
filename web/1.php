@@ -1,6 +1,14 @@
 <?php
 
 
+$ar = ["a", "b", "c", "d"];
+foreach ($ar as $key => $item)
+    if ($item ...) $ar[$key] = "111";
+
+
+
+die();
+
 interface IMyStorage
 {
     public function persist($object);

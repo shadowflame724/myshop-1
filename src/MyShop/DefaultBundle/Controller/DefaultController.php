@@ -3,9 +3,12 @@
 namespace MyShop\DefaultBundle\Controller;
 
 use GuzzleHttp\Client;
+use MyShop\DefaultBundle\Entity\Page;
 use MyShop\DefaultBundle\Entity\Product;
+use MyShop\DefaultBundle\Form\PageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +19,6 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
-
         $products = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Product")->findAll();
         return $this->render("@MyShopDefault/Default/index.html.twig", [
             'productList' => $products

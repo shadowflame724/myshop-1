@@ -7,6 +7,7 @@ use MyShop\DefaultBundle\Form\PageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PageController extends Controller
 {
@@ -16,20 +17,25 @@ class PageController extends Controller
     public function indexAction()
     {
         $pageList = $this->getDoctrine()->getRepository("MyShopDefaultBundle:Page")->getAllPages(true);
-        // 067 70 60 830 иосиф
-
-        // 110 грн балкон гидроизоляция - работа
-        // 320 грн - 10 кв.
-
-        // 120 грн. шпаклевка потолка - кв метр
-
-
-        // 135
-
-        // 170 грн межкомнатная перегородка за метр.
-
-
         return ["pageList" => $pageList];
+    }
+
+    public function createPageWithoutTwigAction()
+    {
+        $data = [
+            'content' => "Some content",
+            "title" => 'Page some title',
+            'dateCreatedAt' => new \DateTime(),
+            'pageKey' => 'page_some_key'
+        ];
+
+        $page = new Page();
+        $form = $this->createForm(PageType::class, $page);
+        $form->submit($data);
+
+        dump($page);
+
+        return new Response();
     }
 
     /**

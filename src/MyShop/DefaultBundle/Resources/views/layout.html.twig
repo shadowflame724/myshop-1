@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ asset("bundles/myshopdefault/main.css") }}" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 </head>
 <body>
     <table border="1" style="width: 100%">
@@ -11,6 +12,7 @@
                     <li><a href="{{ path("myshop.product_info", {id:1}) }}">Product details</a></li>
                     <li><a href="{{ path("myshop.product_list") }}">Product list</a></li>
                     <li><a href="{{ path('myshop.page', {'pageKey':'about'}) }}">О компании</a></li>
+                    <li><a href="{{ path('myshop.parse_cars') }}">Парсим autoria</a></li>
                 </ul>
 
                 {% if is_granted('ROLE_CUSTOMER') %}
@@ -38,5 +40,7 @@
             </td>
         </tr>
     </table>
+
+{% block footer %}{% endblock %}
 </body>
 </html>

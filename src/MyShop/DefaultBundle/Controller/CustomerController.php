@@ -7,6 +7,7 @@ use MyShop\DefaultBundle\Entity\Product;
 use MyShop\DefaultBundle\Form\CustomerType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,6 +50,7 @@ class CustomerController extends Controller
             $this->addFlash("success", "Спасибо за регистрацию!");
             return $this->redirectToRoute("myshop.main_page");
         }
+
         return [
             'form' => $form->createView()
         ];

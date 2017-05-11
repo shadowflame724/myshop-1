@@ -94,6 +94,14 @@ myshop.curl_client_json_rpc:
     requirements:
         idProduct: \d+
 
+myshop.parse_cars:
+    path:   /parse/autoria
+    defaults: { _controller: MyShopDefaultBundle:Crawler:index }
+
+myshop.search:
+    path:   /search
+    defaults: { _controller: MyShopDefaultBundle:Search:index }
+
 myshop.page:
     path:   /{pageKey}
     defaults: { _controller: MyShopDefaultBundle:Page:index }
